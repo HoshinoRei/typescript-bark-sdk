@@ -1,0 +1,32 @@
+name: Document
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/test.yml
+      - src/**
+permissions:
+  contents: write
+jobs:
+  document:
+    name: Deploy document to Github Wiki
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          cache: pnpm
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: pnpm i
+      - name: Generate wiki
+        run: pnpm run doc
+      - name: Publish
+        uses: Andrew-Chen-Wang/github-wiki-action@v4

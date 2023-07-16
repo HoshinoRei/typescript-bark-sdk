@@ -1,0 +1,62 @@
+{
+  "name": "@hoshinorei/bark-sdk",
+  "version": "0.1.0",
+  "description": "A SDK for Bark written in TypeScript",
+  "keywords": [
+    "Bark",
+    "TypeScript"
+  ],
+  "homepage": "https://github.com/HoshinoRei/typescript-bark-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/HoshinoRei/typescript-bark-sdk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoshinoRei/typescript-bark-sdk.git"
+  },
+  "license": "MIT",
+  "author": "HoshinoRei",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build --clean && tsc",
+    "doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme",
+    "format": "prettier --write src *.js *.json",
+    "format:check": "prettier -c src *.js *.json",
+    "lint": "eslint src --ext js,ts --fix",
+    "lint:check": "eslint src --ext js,ts",
+    "test": "jest --slient=false --verbose=true"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "is-url": "^1.2.4"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.6.2",
+    "@types/is-url": "^1.2.30",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "axios-mock-adapter": "^1.21.5",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-config-standard-with-typescript": "^36.1.0",
+    "eslint-import-resolver-node": "^0.3.7",
+    "eslint-module-utils": "^2.8.0",
+    "eslint-plugin-es-x": "^7.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-sort-exports": "^0.8.0",
+    "eslint-scope": "^7.2.1",
+    "eslint-visitor-keys": "^3.4.1",
+    "jest": "^29.6.2",
+    "prettier": "3.0.0",
+    "prettier-plugin-packagejson": "^2.4.5",
+    "ts-jest": "^29.1.1",
+    "typedoc": "^0.24.8",
+    "typedoc-github-wiki-theme": "^1.1.0",
+    "typedoc-plugin-markdown": "^3.15.4",
+    "typescript": "^5.1.6"
+  }
+}

@@ -1,0 +1,35 @@
+name: Test
+on:
+  push:
+    paths:
+      - .github/workflows/test.yml
+      - src/**
+      - package.json
+      - pnpm-lock.yaml
+  pull_request:
+jobs:
+  jest:
+    name: Jest
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 16
+          - 18
+          - 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          cache: pnpm
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: pnpm i
+      - name: Run jest
+        run: pnpm run test
