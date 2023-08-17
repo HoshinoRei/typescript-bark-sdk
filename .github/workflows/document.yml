@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: pnpm
-          node-version: ${{ matrix.node-version }}
+          node-version: latest
       - name: Install dependencies
         run: pnpm i
       - name: Generate wiki
