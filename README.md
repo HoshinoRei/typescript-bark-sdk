@@ -39,16 +39,16 @@ import BarkMessageBuilder from "./BarkMessageBuilder";
 
 const barkClient = new BarkClient("<your_bark_server_url>");
 
-await barkClient.push(
+barkClient.push(
   new BarkMessageBuilder()
     .body("<your_body>")
     .deviceKey("<your_device_key>")
     .title("<your_title>")
     .build()
-)
+);
 ```
 
-For More usage, please read [wiki](https://github.com/HoshinoRei/typescript-bark-sdk/wiki)
+For More usage, please read [wiki](https://github.com/HoshinoRei/typescript-bark-sdk/wiki).
 
 ## License
 
