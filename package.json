@@ -18,6 +18,10 @@
   "author": "HoshinoRei",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "!dist/test"
+  ],
   "scripts": {
     "build": "tsc --build --clean && tsc",
     "doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme",
