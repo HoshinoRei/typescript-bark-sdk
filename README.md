@@ -34,8 +34,7 @@ npm i @hoshinorei/bark-sdk
 #### Push a simple message
 
 ```ts
-import BarkClient from "@hoshinorei/bark-sdk"
-import BarkMessageBuilder from "./BarkMessageBuilder";
+import { BarkClient, BarkMessageBuilder } from "@hoshinorei/bark-sdk";
 
 const barkClient = new BarkClient("<your_bark_server_url>");
 
