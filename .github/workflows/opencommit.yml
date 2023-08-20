@@ -1,0 +1,27 @@
+name: OpenCommit
+on:
+  push:
+    branches-ignore:
+      - master
+jobs:
+  opencommit:
+    name: OpenCommit
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Improve commit message
+        uses: di-sukharev/opencommit@github-action-v1.0.4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          OCO_OPENAI_API_KEY: ${{ secrets.OCO_OPENAI_API_KEY }}
+          OCO_OPENAI_MAX_TOKENS: ${{ secrets.OCO_OPENAI_MAX_TOKENS }}
+          OCO_MODEL: ${{ secrets.OCO_MODEL }}
