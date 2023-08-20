@@ -24,11 +24,5 @@ module.exports = {
   rules: {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "sort-exports/sort-exports": [
-      "error",
-      {
-        sortDir: "asc",
-      },
-    ],
   },
 };
