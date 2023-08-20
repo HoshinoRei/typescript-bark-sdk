@@ -20,15 +20,9 @@ module.exports = {
     project: ["tsconfig.json"],
     sourceType: "module",
   },
-  plugins: ["simple-import-sort", "sort-exports"],
+  plugins: ["simple-import-sort"],
   rules: {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "sort-exports/sort-exports": [
-      "error",
-      {
-        sortDir: "asc",
-      },
-    ],
   },
 };
