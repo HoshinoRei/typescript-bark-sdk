@@ -2,6 +2,7 @@ name: OpenCommit
 on:
   push:
     branches-ignore:
+      - dependabot/**
       - master
 jobs:
   opencommit:
