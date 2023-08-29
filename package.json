@@ -27,8 +27,8 @@
     "doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme",
     "format": "prettier --write src *.js *.json",
     "format:check": "prettier -c src *.js *.json",
-    "lint": "eslint src --ext js,ts --fix",
-    "lint:check": "eslint src --ext js,ts",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
     "test": "jest --slient=false --verbose=true"
   },
   "dependencies": {
