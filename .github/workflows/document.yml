@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/document.yml
       - src/**
+      - README.md
 permissions:
   contents: write
 jobs:
