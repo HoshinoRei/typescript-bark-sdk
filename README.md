@@ -43,7 +43,7 @@ barkClient.push(
     .body("<your_body>")
     .deviceKey("<your_device_key>")
     .title("<your_title>")
-    .build()
+    .build(),
 );
 ```
 
