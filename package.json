@@ -25,8 +25,8 @@
   "scripts": {
     "build": "tsc --build --clean && tsc",
     "doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme",
-    "format": "prettier --write src *.js *.json",
-    "format:check": "prettier -c src *.js *.json",
+    "format": "prettier --write .",
+    "format:check": "prettier -c .",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
     "test": "jest --slient=false --verbose=true"
