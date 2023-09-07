@@ -3,8 +3,9 @@
  * https://jestjs.io/docs/configuration
  */
 
-/** @type {import('jest').Config} */
-const config = {
+import type { Config } from "jest";
+
+const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -97,7 +98,7 @@ const config = {
   // Activates notifications for test results
   // notify: false,
 
-  // An enumeration that specifies notification mode. Requires { notify: true }
+  // An enum that specifies notification mode. Requires { notify: true }
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
@@ -193,4 +194,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = config;
+export default config;
