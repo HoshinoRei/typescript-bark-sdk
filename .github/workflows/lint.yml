@@ -1,12 +1,7 @@
 name: Lint
 on:
-  push:
-    paths:
-      - .github/workflows/lint.yml
-      - src/**
-      - "*.json"
-      - "*.js"
-  pull_request:
+  - pull_request
+  - push
 jobs:
   check:
     name: Check lint
