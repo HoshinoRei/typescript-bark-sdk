@@ -1,7 +1,11 @@
 import axios, { AxiosError } from "axios";
+import crypto from "crypto";
 
 import BarkClientUrl from "../model/enumeration/BarkClientUrl";
+import BarkEncryptedPushAlgorithm from "../model/enumeration/BarkEncryptedPushAlgorithm";
+import BarkEncryptionErrorType from "../model/enumeration/BarkEncryptionErrorType";
 import BarkResponseErrorType from "../model/enumeration/BarkResponseErrorType";
+import BarkEncryptionError from "../model/error/BarkEncryptionError";
 import BarkResponseError from "../model/error/BarkResponseError";
 import type BarkMessage from "../model/request/BarkMessage";
 import type BarkResponse from "../model/response/BarkResponse";
@@ -26,6 +30,108 @@ export default class BarkClient {
       await axios.post<BarkResponse>(BarkClientUrl.PUSH, message);
     } catch (e) {
       throw this.pushErrorProducer(e);
+    }
+  }
+
+  /**
+   * Push a message to Bark APP with encryption
+   *
+   * When using encrypted push, you do not need set device key in { @link BarkMessage }
+   *
+   * @param devicekey device key
+   * @param message bark message, whose device key is unneeded
+   * @param algorithm which algorithm to use
+   * @param key key
+   * @param iv iv
+   * @returns nothing if message is sent successfully
+   * @see [Encryption](https://bark.day.app/#/en-us/encryption)
+   * @throws { @link BarkResponseError } if message is sent unsuccessfully
+   */
+  async pushEncrypted(
+    devicekey: string,
+    message: BarkMessage,
+    algorithm: BarkEncryptedPushAlgorithm,
+    key: string,
+    iv: string,
+  ): Promise<void> {
+    this.checkKey(algorithm, key);
+    this.checkIv(iv);
+
+    const cipher = crypto.createCipheriv(algorithm, key, iv);
+
+    try {
+      await axios.post(
+        devicekey,
+        {
+          ciphertext: `${cipher.update(
+            JSON.stringify(message),
+            "utf-8",
+            "base64",
+          )}${cipher.final("base64")}`,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        },
+      );
+    } catch (e) {
+      throw this.pushErrorProducer(e);
+    }
+  }
+
+  /**
+   * Check if key is legal when using encrypted push
+   * @param algorithm which algorithm to use
+   * @param key key
+   * @throws { @link BarkEncryptionError } when key is illegal
+   */
+  protected checkKey(algorithm: BarkEncryptedPushAlgorithm, key: string): void {
+    switch (algorithm) {
+      case BarkEncryptedPushAlgorithm.AES_128_CBC:
+      case BarkEncryptedPushAlgorithm.AES_128_ECB: {
+        if (key.length !== 16) {
+          throw new BarkEncryptionError(
+            BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
+            "The length of key is not 16",
+          );
+        }
+        break;
+      }
+      case BarkEncryptedPushAlgorithm.AES_192_CBC:
+      case BarkEncryptedPushAlgorithm.AES_192_ECB: {
+        if (key.length !== 24) {
+          throw new BarkEncryptionError(
+            BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
+            "The length of key is not 24",
+          );
+        }
+        break;
+      }
+      case BarkEncryptedPushAlgorithm.AES_256_CBC:
+      case BarkEncryptedPushAlgorithm.AES_256_ECB: {
+        if (key.length !== 32) {
+          throw new BarkEncryptionError(
+            BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
+            "The length of key is not 32",
+          );
+        }
+        break;
+      }
+    }
+  }
+
+  /**
+   * Check if iv is legal when using encrypted push
+   * @param iv iv
+   * @throws { @link BarkEncryptionError } when iv is illegal
+   */
+  protected checkIv(iv: string): void {
+    if (iv.length !== 16) {
+      throw new BarkEncryptionError(
+        BarkEncryptionErrorType.IV_IS_NOT_CORRECT,
+        "The length of iv is not 16",
+      );
     }
   }
 
