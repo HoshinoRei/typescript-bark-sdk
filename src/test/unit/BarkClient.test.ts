@@ -192,7 +192,7 @@ describe.each([
             barkMessageCommonProperty.device_Key,
             barkMessage,
             algorithm,
-            "1",
+            crypto.randomBytes(1).toString("hex"),
             iv,
           ),
         ).rejects.toThrowError(
