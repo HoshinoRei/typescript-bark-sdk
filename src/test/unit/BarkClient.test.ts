@@ -1,12 +1,16 @@
 import { afterEach, describe, expect, test } from "@jest/globals";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import crypto from "crypto";
 
 import BarkClient from "../../lib/BarkClient";
 import BarkMessageBuilder from "../../lib/BarkMessageBuilder";
 import BarkClientUrl from "../../model/enumeration/BarkClientUrl";
+import BarkEncryptedPushAlgorithm from "../../model/enumeration/BarkEncryptedPushAlgorithm";
+import BarkEncryptionErrorType from "../../model/enumeration/BarkEncryptionErrorType";
 import BarkMessageLevel from "../../model/enumeration/BarkMessageLevel";
 import BarkMessageSound from "../../model/enumeration/BarkMessageSound";
+import BarkEncryptionError from "../../model/error/BarkEncryptionError";
 import type BarkMessage from "../../model/request/BarkMessage";
 
 const client = new BarkClient();
@@ -117,6 +121,104 @@ describe.each([
       });
 
       await expect(client.push(barkMessage)).resolves.not.toThrow();
+    });
+  });
+
+  describe("Encrypted push", () => {
+    delete barkMessage.device_key;
+
+    const algorithm = BarkEncryptedPushAlgorithm.AES_128_CBC;
+    const key = crypto.randomBytes(8).toString("hex");
+    const iv = crypto.randomBytes(8).toString("hex");
+
+    test("Push failed", async () => {
+      const cipher = crypto.createCipheriv(algorithm, key, iv);
+
+      mockAxios
+        .onPost(barkMessageCommonProperty.device_Key, {
+          ciphertext: `${cipher.update(
+            JSON.stringify(barkMessage),
+            "utf-8",
+            "base64",
+          )}${cipher.final("base64")}`,
+        })
+        .reply(500, {
+          code: 500,
+          message: "push failed: ",
+          timestamp: 0,
+        });
+
+      await expect(
+        client.pushEncrypted(
+          barkMessageCommonProperty.device_Key,
+          barkMessage,
+          algorithm,
+          key,
+          iv,
+        ),
+      ).rejects.toThrowErrorMatchingSnapshot();
+    });
+
+    test.each([
+      {
+        algorithm: BarkEncryptedPushAlgorithm.AES_128_CBC,
+        length: 16,
+      },
+      {
+        algorithm: BarkEncryptedPushAlgorithm.AES_128_ECB,
+        length: 16,
+      },
+      {
+        algorithm: BarkEncryptedPushAlgorithm.AES_192_CBC,
+        length: 24,
+      },
+      {
+        algorithm: BarkEncryptedPushAlgorithm.AES_192_ECB,
+        length: 24,
+      },
+      {
+        algorithm: BarkEncryptedPushAlgorithm.AES_256_CBC,
+        length: 32,
+      },
+      {
+        algorithm: BarkEncryptedPushAlgorithm.AES_256_ECB,
+        length: 32,
+      },
+    ])(
+      "The length of key is not $length when algorithm is $algorithm",
+      async ({ algorithm, length }) => {
+        await expect(
+          client.pushEncrypted(
+            barkMessageCommonProperty.device_Key,
+            barkMessage,
+            algorithm,
+            crypto.randomBytes(1).toString("hex"),
+            iv,
+          ),
+        ).rejects.toThrowError(
+          new BarkEncryptionError(
+            BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
+            `The length of key is not ${length}`,
+          ),
+        );
+      },
+    );
+
+    test("The length of iv is not 16", async () => {
+      await expect(
+        client.pushEncrypted(
+          barkMessageCommonProperty.device_Key,
+          barkMessage,
+          algorithm,
+          key,
+          "1",
+        ),
+      ).rejects.toThrowError(
+        new BarkEncryptionError(
+          BarkEncryptionErrorType.IV_IS_NOT_CORRECT,
+          "The length of iv is not 16",
+        ),
+      );
     });
   });
 });
