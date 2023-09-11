@@ -128,8 +128,8 @@ describe.each([
     delete barkMessage.device_key;
 
     const algorithm = BarkEncryptedPushAlgorithm.AES_128_CBC;
-    const key = "1234567890123456";
-    const iv = "1234567890123456";
+    const key = crypto.randomBytes(8).toString("hex");
+    const iv = crypto.randomBytes(8).toString("hex");
 
     test("Push failed", async () => {
       const cipher = crypto.createCipheriv(algorithm, key, iv);
