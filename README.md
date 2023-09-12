@@ -7,7 +7,7 @@ A SDK for Bark written in TypeScript.
 ### Features
 
 - Using Bark V2 API
-- Encrypted push (developing)
+- Encrypted push
 
 ### Getting started
 
