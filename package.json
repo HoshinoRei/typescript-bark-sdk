@@ -1,7 +1,7 @@
 {
   "name": "@hoshinorei/bark-sdk",
   "version": "0.1.1",
-  "description": "A SDK for Bark written in TypeScript",
+  "description": "An SDK for Bark written in TypeScript",
   "keywords": [
     "Bark",
     "TypeScript"
