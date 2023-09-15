@@ -2,7 +2,7 @@
 
 ## Introduction
 
-An SDK for Bark written in TypeScript.
+An SDK for [Bark](https://github.com/Finb/Bark) written in TypeScript.
 
 ### Features
 
