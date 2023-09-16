@@ -47,6 +47,28 @@ barkClient.push(
 );
 ```
 
+#### Push an encrypted message
+
+```ts
+import {
+  BarkClient,
+  BarkEncryptedPushAlgorithm,
+  BarkMessageBuilder,
+} from "@hoshinorei/bark-sdk";
+
+const barkClient = new BarkClient("<your_bark_server_url>");
+
+barkClient.pushEncrypted(
+  "<your_device_key>",
+  new BarkMessageBuilder().body("<your_body>").title("<your_title>").build(),
+  BarkEncryptedPushAlgorithm.AES_128_CBC, // You can view the supported algorithms via the link below
+  "<your_key>",
+  "<your_iv>",
+);
+```
+
+[Supported algorithm](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/BarkEncryptedPushAlgorithm#enumeration-members)
+
 For More usage, please read [wiki](https://github.com/HoshinoRei/typescript-bark-sdk/wiki).
 
 ## License
