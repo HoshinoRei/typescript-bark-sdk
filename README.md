@@ -60,10 +60,7 @@ const barkClient = new BarkClient("<your_bark_server_url>");
 
 barkClient.pushEncrypted(
   "<your_device_key>",
-  new BarkMessageBuilder()
-    .body("<your_body>")
-    .title("<your_title>")
-    .build(),
+  new BarkMessageBuilder().body("<your_body>").title("<your_title>").build(),
   BarkEncryptedPushAlgorithm.AES_128_CBC, // You can view the supported algorithms via the link below
   "<your_key>",
   "<your_iv>",
