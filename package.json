@@ -23,7 +23,7 @@
     "!dist/test"
   ],
   "scripts": {
-    "build": "tsc --build --clean && tsc",
+    "build": "tsc --build --clean && tsc -p tsconfig.prod.json",
     "doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme",
     "format": "prettier --write .",
     "format:check": "prettier -c .",
