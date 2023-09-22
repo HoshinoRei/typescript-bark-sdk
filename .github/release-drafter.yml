@@ -19,6 +19,9 @@ autolabeler:
   - label: bug
     title:
       - /fix:/
+  - label: build
+    title:
+      - /build:/
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: \<*_&
 version-resolver:
