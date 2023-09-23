@@ -22,6 +22,9 @@ autolabeler:
   - label: build
     title:
       - /build:/
+  - label: chore
+    title:
+      - /chore:/
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: \<*_&
 version-resolver:
