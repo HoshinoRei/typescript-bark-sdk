@@ -25,6 +25,9 @@ autolabeler:
   - label: chore
     title:
       - /chore:/
+  - label: ci
+    title:
+      - /ci:/
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: \<*_&
 version-resolver:
