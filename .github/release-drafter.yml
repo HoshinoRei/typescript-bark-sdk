@@ -28,6 +28,9 @@ autolabeler:
   - label: ci
     title:
       - /ci:/
+  - label: documentation
+    title:
+      - /docs:/
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: \<*_&
 version-resolver:
