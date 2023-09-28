@@ -24,7 +24,7 @@ autolabeler:
       - /build:/
   - label: chore
     title:
-      - /^chore(\(.+\))?:/g
+      - '/^chore(\(.+\))?:/g'
   - label: ci
     title:
       - /ci:/
