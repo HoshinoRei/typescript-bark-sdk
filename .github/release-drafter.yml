@@ -31,6 +31,9 @@ autolabeler:
   - label: documentation
     title:
       - /docs:/
+  - label: enhancement
+    title:
+      - /^feat(\(.+\))?:/g
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: \<*_&
 version-resolver:
