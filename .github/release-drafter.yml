@@ -36,7 +36,7 @@ autolabeler:
       - /^feat(\(.+\))?:/g
   - label: test
     title:
-      - /^test(\(.+\))?:/
+      - /^test(\(.+\))?:/g
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: \<*_&
 version-resolver:
