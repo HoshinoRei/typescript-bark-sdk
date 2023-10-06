@@ -12,6 +12,8 @@ categories:
       - bug
   - title: Maintenance
     label: chore
+  - title: Tests
+    label: test
 autolabeler:
   - label: breaking change
     title:
