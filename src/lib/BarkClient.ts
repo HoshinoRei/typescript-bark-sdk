@@ -19,6 +19,20 @@ export default class BarkClient {
   }
 
   /**
+   * Check if the Bark server is healthy
+   * @returns nothing if the Bark server is healthy
+   * @see [Healthz](https://github.com/Finb/bark-server/blob/master/docs/API_V2.md#healthz)
+   * @throws { @link BarkResponseError } if the Bark server is unhealthy
+   */
+  async health(): Promise<void> {
+    try {
+      await axios.get<string>(BarkClientUrl.HEALTHZ);
+    } catch (e) {
+      throw this.miscellaneousFunctionErrorProducer(e);
+    }
+  }
+
+  /**
    * Push a message to Bark APP
    * @param message bark message
    * @returns nothing if message is sent successfully
@@ -77,6 +91,32 @@ export default class BarkClient {
       );
     } catch (e) {
       throw this.pushErrorProducer(e);
+    }
+  }
+
+  /**
+   * An error producing function used by miscellaneous function
+   * @param e error
+   * @returns { @link BarkResponseError }
+   */
+  protected miscellaneousFunctionErrorProducer(e: unknown): BarkResponseError {
+    if (e instanceof AxiosError) {
+      return new BarkResponseError(
+        BarkResponseErrorType.SERVER_HAS_NO_RESPONSE,
+        "Server has no response",
+        e,
+      );
+    } else if (e instanceof Error) {
+      return new BarkResponseError(
+        BarkResponseErrorType.UNKNOWN_ERROR,
+        "Unknown error",
+        e,
+      );
+    } else {
+      return new BarkResponseError(
+        BarkResponseErrorType.UNKNOWN_ERROR,
+        "Unknown error",
+      );
     }
   }
 

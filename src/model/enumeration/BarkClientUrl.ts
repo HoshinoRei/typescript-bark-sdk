@@ -1,4 +1,5 @@
 enum BarkClientUrl {
+  HEALTHZ = "/healthz",
   PUSH = "/push",
 }
 
