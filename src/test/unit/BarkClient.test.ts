@@ -21,6 +21,20 @@ afterEach(() => {
   mockAxios.reset();
 });
 
+describe("Health", () => {
+  test("Server is healthy", async () => {
+    mockAxios.onGet(BarkClientUrl.HEALTHZ).reply(200, "ok");
+
+    await expect(client.health()).resolves.not.toThrowError();
+  });
+
+  test("Server is unhealthy", async () => {
+    mockAxios.onGet(BarkClientUrl.HEALTHZ).timeout();
+
+    await expect(client.health()).rejects.toThrowErrorMatchingSnapshot();
+  });
+});
+
 const barkMessageCommonProperty = {
   badge: 1,
   body: "Test body",
