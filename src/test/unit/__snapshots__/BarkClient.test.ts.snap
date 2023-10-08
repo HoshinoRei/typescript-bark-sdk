@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Push 0 Encrypted push Push failed 1`] = `"Unknown error"`;
-
 exports[`Health Server is unhealthy 1`] = `"Server has no response"`;
+
+exports[`Push 0 Encrypted push Push failed 1`] = `"Unknown error"`;
 
 exports[`Push 0 Normal Push Device key is empty 1`] = `"Device key is empty"`;
 
