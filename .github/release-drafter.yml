@@ -29,7 +29,7 @@ autolabeler:
       - /^chore(\(.+\))?:/g
   - label: ci
     title:
-      - /ci:/
+      - /^ci(\(.+\))?:/g
   - label: documentation
     title:
       - /docs:/
