@@ -12,6 +12,12 @@ categories:
       - bug
   - title: Maintenance
     label: chore
+  - title: Others
+    labels:
+      - ci
+      - refactor
+      - revert
+      - style
   - title: Tests
     label: test
 autolabeler:
