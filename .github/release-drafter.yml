@@ -38,7 +38,7 @@ autolabeler:
       - /^ci(\(.+\))?:/g
   - label: documentation
     title:
-      - /docs:/
+      - /^docs(\(.+\))?:/g
   - label: enhancement
     title:
       - /^feat(\(.+\))?:/g
