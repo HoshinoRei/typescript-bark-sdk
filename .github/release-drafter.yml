@@ -29,7 +29,7 @@ autolabeler:
       - /^fix(\(.+\))?:/g
   - label: build
     title:
-      - /build:/
+      - /build(\(.+\))?:/g
   - label: chore
     title:
       - /^chore(\(.+\))?:/g
