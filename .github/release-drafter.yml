@@ -10,6 +10,8 @@ categories:
       - fix
       - bugfix
       - bug
+  - title: Dependency Updates
+    label: dependencies
   - title: Maintenance
     label: chore
   - title: Others
