@@ -9,9 +9,9 @@ on:
   pull_request:
     paths:
       - .github/workflows/test.yml
-      - src/**
       - package.json
       - pnpm-lock.yaml
+      - src/**
 jobs:
   jest:
     name: Jest
