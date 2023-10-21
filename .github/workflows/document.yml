@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: pnpm
-          node-version: latest
+          node-version: 21
       - name: Install dependencies
         run: pnpm i
       - name: Generate wiki
