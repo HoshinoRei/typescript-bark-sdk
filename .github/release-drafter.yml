@@ -25,7 +25,7 @@ categories:
 autolabeler:
   - label: breaking change
     title:
-      - /!(\(.+\))?:/g
+      - /(\(.+\))?!:/g
   - label: bug
     title:
       - /^fix(\(.+\))?:/g
