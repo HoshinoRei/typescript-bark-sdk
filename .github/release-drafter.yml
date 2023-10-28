@@ -28,7 +28,7 @@ autolabeler:
       - /(\(.+\))?!:/g
   - label: bug
     title:
-      - /^fix(\(.+\))?:/g
+      - /^fix(\(.+\))?!?:/g
   - label: build
     title:
       - /build(\(.+\))?:/g
