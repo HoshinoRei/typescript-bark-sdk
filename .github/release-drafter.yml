@@ -37,7 +37,7 @@ autolabeler:
       - /^chore(\(.+\))?!?:/g
   - label: ci
     title:
-      - /^ci(\(.+\))?:/g
+      - /^ci(\(.+\))?!?:/g
   - label: documentation
     title:
       - /^docs(\(.+\))?:/g
