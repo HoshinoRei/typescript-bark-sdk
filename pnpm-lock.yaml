@@ -45,7 +45,7 @@ devDependencies:
     version: 2.8.0(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.7)(eslint@8.52.0)
   eslint-plugin-es-x:
     specifier: ^7.1.0
-    version: 7.1.0(eslint@8.52.0)
+    version: 7.3.0(eslint@8.52.0)
   eslint-plugin-import:
     specifier: ^2.27.5
     version: 2.29.0(@typescript-eslint/parser@5.62.0)(eslint@8.52.0)
@@ -1986,8 +1986,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-es-x@7.1.0(eslint@8.52.0):
-    resolution: {integrity: sha512-AhiaF31syh4CCQ+C5ccJA0VG6+kJK8+5mXKKE7Qs1xcPRg02CDPOj3mWlQxuWS/AYtg7kxrDNgW9YW3vc0Q+Mw==}
+  /eslint-plugin-es-x@7.3.0(eslint@8.52.0):
+    resolution: {integrity: sha512-W9zIs+k00I/I13+Bdkl/zG1MEO07G97XjUSQuH117w620SJ6bHtLUmoMvkGA2oYnI/gNdr+G7BONLyYnFaLLEQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=8'
@@ -2041,7 +2041,7 @@ packages:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.52.0)
       builtins: 5.0.1
       eslint: 8.52.0
-      eslint-plugin-es-x: 7.1.0(eslint@8.52.0)
+      eslint-plugin-es-x: 7.3.0(eslint@8.52.0)
       get-tsconfig: 4.7.0
       ignore: 5.2.4
       is-core-module: 2.13.0
