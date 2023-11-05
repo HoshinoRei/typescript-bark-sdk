@@ -37,6 +37,8 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Run jest
+        env:
+          CI: true
         run: pnpm run test
       - name: Publish Test Report
         if: success() || failure()
