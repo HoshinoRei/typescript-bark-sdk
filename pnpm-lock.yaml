@@ -18,7 +18,7 @@ devDependencies:
     version: 29.7.0
   '@types/is-url':
     specifier: ^1.2.30
-    version: 1.2.31
+    version: 1.2.32
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.50.0
     version: 5.50.0(@typescript-eslint/parser@5.62.0)(eslint@8.53.0)(typescript@5.2.2)
@@ -933,8 +933,8 @@ packages:
       '@types/node': 20.4.10
     dev: true
 
-  /@types/is-url@1.2.31:
-    resolution: {integrity: sha512-ZkuJ+NIr+/V6Xz+S14kYT3g0wYmUa9+bOXXL6Z3nDsy38GqHIu4QF1q2Z0f8y8Pfd8zivikE9fTFa5cfkOROSg==}
+  /@types/is-url@1.2.32:
+    resolution: {integrity: sha512-46VLdbWI8Sc+hPexQ6NLNR2YpoDyDZIpASHkJQ2Yr+Kf9Giw6LdCTkwOdsnHKPQeh7xTjTmSnxbE8qpxYuCiHA==}
     dev: true
 
   /@types/istanbul-lib-coverage@2.0.4:
