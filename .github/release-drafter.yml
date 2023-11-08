@@ -43,7 +43,7 @@ autolabeler:
       - /^docs(\(.+\))?!?:/g
   - label: enhancement
     title:
-      - /^feat(\(.+\))?:/g
+      - /^feat(\(.+\))?!?:/g
   - label: test
     title:
       - /^test(\(.+\))?:/g
