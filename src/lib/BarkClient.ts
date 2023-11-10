@@ -8,6 +8,7 @@ import BarkResponseErrorType from "../model/enumeration/BarkResponseErrorType";
 import BarkEncryptionError from "../model/error/BarkEncryptionError";
 import BarkResponseError from "../model/error/BarkResponseError";
 import type BarkMessage from "../model/request/BarkMessage";
+import type BarkInfoResponse from "../model/response/BarkInfoResponse";
 import type BarkResponse from "../model/response/BarkResponse";
 
 /**
@@ -27,6 +28,21 @@ export default class BarkClient {
   async health(): Promise<void> {
     try {
       await axios.get<string>(BarkClientUrl.HEALTHZ);
+    } catch (e) {
+      throw this.miscellaneousFunctionErrorProducer(e);
+    }
+  }
+
+  /**
+   * Get info of Bark server
+   * @returns { @link BarkInfoResponse } info of the Bark server
+   * @see [Info](https://github.com/Finb/bark-server/blob/master/docs/API_V2.md#info)
+   * @throws { @link BarkResponseError } if the Bark server does not respond normally
+   */
+  async info(): Promise<BarkInfoResponse> {
+    try {
+      const { data } = await axios.get<BarkInfoResponse>(BarkClientUrl.INFO);
+      return data;
     } catch (e) {
       throw this.miscellaneousFunctionErrorProducer(e);
     }
