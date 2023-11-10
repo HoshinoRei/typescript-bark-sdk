@@ -10,6 +10,7 @@ import BarkEncryptionError from "./model/error/BarkEncryptionError";
 import BarkMessageError from "./model/error/BarkMessageError";
 import BarkResponseError from "./model/error/BarkResponseError";
 import type BarkMessage from "./model/request/BarkMessage";
+import type BarkInfoResponse from "./model/response/BarkInfoResponse";
 import type BarkResponse from "./model/response/BarkResponse";
 
 export {
@@ -17,6 +18,7 @@ export {
   BarkEncryptedPushAlgorithm,
   BarkEncryptionError,
   BarkEncryptionErrorType,
+  type BarkInfoResponse,
   type BarkMessage,
   BarkMessageBuilder,
   BarkMessageError,
