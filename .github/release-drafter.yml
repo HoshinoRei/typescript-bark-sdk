@@ -44,6 +44,9 @@ autolabeler:
   - label: enhancement
     title:
       - /^feat(\(.+\))?!?:/g
+  - label: performance
+    title:
+      - /^pref(\(.+\))?!?:/g
   - label: test
     title:
       - /^test(\(.+\))?!?:/g
