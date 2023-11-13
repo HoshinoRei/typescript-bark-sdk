@@ -1,6 +1,8 @@
 name-template: v$RESOLVED_VERSION
 tag-template: v$RESOLVED_VERSION
 categories:
+  - title: Breaking changes
+    label: breaking change
   - title: Features
     labels:
       - feature
