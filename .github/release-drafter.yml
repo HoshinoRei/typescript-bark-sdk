@@ -8,9 +8,7 @@ categories:
   - title: Dependency Updates
     label: dependencies
   - title: Features
-    labels:
-      - feature
-      - enhancement
+    label: enhancement
   - title: Maintenance
     label: chore
   - title: Others
