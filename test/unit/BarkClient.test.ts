@@ -3,15 +3,15 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import crypto from "crypto";
 
-import BarkClient from "../../lib/BarkClient";
-import BarkMessageBuilder from "../../lib/BarkMessageBuilder";
-import BarkClientUrl from "../../model/enumeration/BarkClientUrl";
-import BarkEncryptedPushAlgorithm from "../../model/enumeration/BarkEncryptedPushAlgorithm";
-import BarkEncryptionErrorType from "../../model/enumeration/BarkEncryptionErrorType";
-import BarkMessageLevel from "../../model/enumeration/BarkMessageLevel";
-import BarkMessageSound from "../../model/enumeration/BarkMessageSound";
-import BarkEncryptionError from "../../model/error/BarkEncryptionError";
-import type BarkMessage from "../../model/request/BarkMessage";
+import BarkClient from "../../src/lib/BarkClient";
+import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder";
+import BarkClientUrl from "../../src/model/enumeration/BarkClientUrl";
+import BarkEncryptedPushAlgorithm from "../../src/model/enumeration/BarkEncryptedPushAlgorithm";
+import BarkEncryptionErrorType from "../../src/model/enumeration/BarkEncryptionErrorType";
+import BarkMessageLevel from "../../src/model/enumeration/BarkMessageLevel";
+import BarkMessageSound from "../../src/model/enumeration/BarkMessageSound";
+import BarkEncryptionError from "../../src/model/error/BarkEncryptionError";
+import type BarkMessage from "../../src/model/request/BarkMessage";
 
 const client = new BarkClient();
 
