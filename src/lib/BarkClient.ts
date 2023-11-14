@@ -68,7 +68,7 @@ export default class BarkClient {
    *
    * When using encrypted push, you do not need set device key in { @link BarkMessage }
    *
-   * @param devicekey device key
+   * @param deviceKey device key
    * @param message bark message, whose device key is unneeded
    * @param algorithm which algorithm to use
    * @param key key
@@ -78,7 +78,7 @@ export default class BarkClient {
    * @throws { @link BarkResponseError } if message is sent unsuccessfully
    */
   async pushEncrypted(
-    devicekey: string,
+    deviceKey: string,
     message: BarkMessage,
     algorithm: BarkEncryptedPushAlgorithm,
     key: string,
@@ -91,7 +91,7 @@ export default class BarkClient {
 
     try {
       await axios.post(
-        devicekey,
+        deviceKey,
         {
           ciphertext: `${cipher.update(
             JSON.stringify(message),
