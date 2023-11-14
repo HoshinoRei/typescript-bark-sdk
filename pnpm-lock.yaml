@@ -58,6 +58,9 @@ devDependencies:
   eslint-plugin-simple-import-sort:
     specifier: ^10.0.0
     version: 10.0.0(eslint@8.53.0)
+  eslint-plugin-sort-class-members:
+    specifier: ^1.19.0
+    version: 1.19.0(eslint@8.53.0)
   eslint-scope:
     specifier: ^7.2.1
     version: 7.2.1
@@ -2069,6 +2072,15 @@ packages:
     resolution: {integrity: sha512-AeTvO9UCMSNzIHRkg8S6c3RPy5YEwKWSQPx3DYghLedo2ZQxowPFLGDN1AZ2evfg6r6mjBSZSLxLFsWSu3acsw==}
     peerDependencies:
       eslint: '>=5.0.0'
+    dependencies:
+      eslint: 8.53.0
+    dev: true
+
+  /eslint-plugin-sort-class-members@1.19.0(eslint@8.53.0):
+    resolution: {integrity: sha512-YayvASA1bavdPeRU9FMPnale2+Oi3aMcHGVC5EUm9b671oxm7ahvR+q8BfsU2aV+KAFezNfu47VPgdZK6gwYPw==}
+    engines: {node: '>=4.0.0'}
+    peerDependencies:
+      eslint: '>=0.8.0'
     dependencies:
       eslint: 8.53.0
     dev: true
