@@ -130,7 +130,7 @@ const config: Config = {
   // rootDir: undefined,
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ["<rootDir>/src/test"],
+  roots: ["<rootDir>/test"],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@jest/globals";
 
-import BarkMessageBuilder from "../../lib/BarkMessageBuilder";
-import BarkMessageErrorType from "../../model/enumeration/BarkMessageErrorType";
-import BarkMessageError from "../../model/error/BarkMessageError";
+import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder";
+import BarkMessageErrorType from "../../src/model/enumeration/BarkMessageErrorType";
+import BarkMessageError from "../../src/model/error/BarkMessageError";
 
 describe("Build message", () => {
   const notUrl: string = "I am not a URL";
