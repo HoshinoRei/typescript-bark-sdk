@@ -52,6 +52,9 @@ autolabeler:
   - label: refactor
     title:
       - /^refactor(\(.+\))?!?:/g
+  - label: style
+    title:
+      - /^style(\(.+\))?!?:/g
   - label: test
     title:
       - /^test(\(.+\))?!?:/g
