@@ -19,6 +19,22 @@ parserOptions:
   sourceType: module
 plugins:
   - simple-import-sort
+  - sort-class-members
 rules:
   simple-import-sort/imports: error
   simple-import-sort/exports: error
+  sort-class-members/sort-class-members:
+    - 2
+    - order:
+        - "[static-properties]"
+        - "[static-methods"
+        - "[properties]"
+        - "[conventional-private-properties]"
+        - constructor
+        - "[methods]"
+        - "[conventional-private-methods]"
+      accessorPairPositioning: getThenSet
+      groups:
+        allMethods:
+          - type: method
+            sort: alphabetical
