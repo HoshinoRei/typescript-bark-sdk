@@ -66,8 +66,6 @@ version-resolver:
     labels:
       - patch
   default: patch
-exclude-contributors:
-  - dependabot[bot]
 template: |
   ## Changes
 
