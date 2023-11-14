@@ -46,7 +46,7 @@ jobs:
         run: pnpm run test
       - name: Publish Test Report
         if: success() || failure()
-        uses: dorny/test-reporter@v1
+        uses: phoenix-actions/test-reporting@v12
         with:
           name: Jest Tests in Node ${{ matrix.node-version }}
           path: coverage/junit.xml
