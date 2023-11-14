@@ -19,8 +19,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "!dist/test"
+    "dist"
   ],
   "scripts": {
     "build": "tsc --build --clean && tsc -p tsconfig.prod.json",
