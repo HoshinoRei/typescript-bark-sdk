@@ -49,6 +49,9 @@ autolabeler:
   - label: performance
     title:
       - /^pref(\(.+\))?!?:/g
+  - label: refactor
+    title:
+      - /^refactor(\(.+\))?!?:/g
   - label: test
     title:
       - /^test(\(.+\))?!?:/g
