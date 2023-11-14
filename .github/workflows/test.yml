@@ -50,4 +50,5 @@ jobs:
         with:
           name: Jest Tests in Node ${{ matrix.node-version }}
           path: coverage/junit.xml
+          output-to: step-summary
           reporter: jest-junit
