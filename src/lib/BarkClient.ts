@@ -41,8 +41,23 @@ export default class BarkClient {
    */
   async info(): Promise<BarkInfoResponse> {
     try {
-      const { data } = await axios.get<BarkInfoResponse>(BarkClientUrl.INFO);
-      return data;
+      const { data } = await axios.get<{
+        arch?: string;
+        build?: string;
+        commit?: string;
+        devices?: number;
+        version?: string;
+      }>(BarkClientUrl.INFO);
+      return {
+        arch: data.arch,
+        build:
+          data.build !== undefined
+            ? new Date(Date.parse(data.build))
+            : undefined,
+        commit: data.commit,
+        devices: data.devices,
+        version: data.version,
+      };
     } catch (e) {
       throw this.miscellaneousFunctionErrorProducer(e);
     }
