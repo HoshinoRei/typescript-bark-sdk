@@ -8,12 +8,14 @@ on:
       - src/**
       - package.json
       - pnpm-lock.yaml
+      - test/**
   pull_request:
     paths:
       - .github/workflows/test.yml
       - package.json
       - pnpm-lock.yaml
       - src/**
+      - test/**
 jobs:
   jest:
     name: Jest
