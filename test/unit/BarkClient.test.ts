@@ -35,6 +35,26 @@ describe("Health", () => {
   });
 });
 
+describe("Info", () => {
+  test("Server respond info", async () => {
+    mockAxios.onGet(BarkClientUrl.INFO).reply(200, {
+      arch: "linux/arm64",
+      build: "2023-04-10 08:13:23",
+      commit: "dc8de8416c9c2c6c8cd6b95a85ff09c5653dfd11",
+      devices: 1,
+      version: "v2.1.5",
+    });
+
+    await expect(client.info()).resolves.toEqual({
+      arch: "linux/arm64",
+      build: new Date(Date.parse("2023-04-10 08:13:23")),
+      commit: "dc8de8416c9c2c6c8cd6b95a85ff09c5653dfd11",
+      devices: 1,
+      version: "v2.1.5",
+    });
+  });
+});
+
 const barkMessageCommonProperty = {
   badge: 1,
   body: "Test body",
