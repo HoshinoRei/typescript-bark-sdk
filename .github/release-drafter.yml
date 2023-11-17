@@ -12,7 +12,9 @@ categories:
   - title: Features
     label: enhancement
   - title: Maintenance
-    label: chore
+    labels:
+      - build
+      - chore
   - title: Others
     labels:
       - ci
