@@ -53,6 +53,12 @@ describe("Info", () => {
       version: "v2.1.5",
     });
   });
+
+  test("Server don't respond info", async () => {
+    mockAxios.onGet(BarkClientUrl.INFO).timeout();
+
+    await expect(client.info()).rejects.toThrowErrorMatchingSnapshot();
+  });
 });
 
 const barkMessageCommonProperty = {
