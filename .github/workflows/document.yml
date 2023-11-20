@@ -1,12 +1,8 @@
 name: Document
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - .github/workflows/document.yml
-      - src/**
-      - README.md
+  release:
+    types:
+      - published
 permissions:
   contents: write
 jobs:
