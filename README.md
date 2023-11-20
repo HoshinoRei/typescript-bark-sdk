@@ -9,6 +9,7 @@ An SDK for [Bark](https://github.com/Finb/Bark) written in TypeScript.
 - Using Bark V2 API
 - Encrypted push
 - Check if the Bark server is healthy
+- Check if the Bark server is running
 
 ### Getting started
 
