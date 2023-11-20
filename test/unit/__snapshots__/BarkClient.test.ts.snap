@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Health Server is unhealthy 1`] = `"Server has no response"`;
+exports[`Health Server is unhealthy 1`] = `"Server has not response"`;
 
-exports[`Info Server don't respond info 1`] = `"Server has no response"`;
+exports[`Info Server don't respond info 1`] = `"Server has not response"`;
 
 exports[`Push 0 Encrypted push Push failed 1`] = `"Unknown error"`;
 
