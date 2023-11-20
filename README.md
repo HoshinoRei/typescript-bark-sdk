@@ -71,7 +71,7 @@ barkClient.pushEncrypted(
 
 [Supported algorithm](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/BarkEncryptedPushAlgorithm#enumeration-members)
 
-For More usage, please read [wiki](https://github.com/HoshinoRei/typescript-bark-sdk/wiki).
+For More usage, please read [wiki](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/Exports).
 
 ## License
 
