@@ -64,6 +64,20 @@ export default class BarkClient {
   }
 
   /**
+   * Check if the Bark server is running
+   * @returns nothing if the Bark server is running
+   * @see [Ping](https://github.com/Finb/bark-server/blob/master/docs/API_V2.md#ping)
+   * @throws { @link BarkResponseError } if the Bark server is not running
+   */
+  async ping(): Promise<void> {
+    try {
+      await axios.get<BarkResponse>(BarkClientUrl.PING);
+    } catch (e) {
+      throw this.miscellaneousFunctionErrorProducer(e);
+    }
+  }
+
+  /**
    * Push a message to Bark APP
    * @param message bark message
    * @returns nothing if message is sent successfully
