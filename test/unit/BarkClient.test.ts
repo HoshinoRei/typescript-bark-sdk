@@ -61,6 +61,24 @@ describe("Info", () => {
   });
 });
 
+describe("Ping", () => {
+  test("Server is running", async () => {
+    mockAxios.onGet(BarkClientUrl.PING).reply(200, {
+      code: 200,
+      message: "pong",
+      timestamp: Date.parse(new Date().toString()),
+    });
+
+    await expect(client.ping()).resolves.not.toThrowError();
+  });
+
+  test("Server is not running", async () => {
+    mockAxios.onGet(BarkClientUrl.PING).timeout();
+
+    await expect(client.info()).rejects.toThrowErrorMatchingSnapshot();
+  });
+});
+
 const barkMessageCommonProperty = {
   badge: 1,
   body: "Test body",
