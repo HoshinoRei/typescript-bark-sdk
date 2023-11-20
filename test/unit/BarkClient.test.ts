@@ -63,11 +63,10 @@ describe("Info", () => {
 
 describe("Ping", () => {
   test("Server is running", async () => {
-    const timestamp = Date.parse(new Date().toString());
     mockAxios.onGet(BarkClientUrl.PING).reply(200, {
       code: 200,
       message: "pong",
-      timestamp,
+      timestamp: Date.parse(new Date().toString()),
     });
 
     await expect(client.ping()).resolves.not.toThrowError();
