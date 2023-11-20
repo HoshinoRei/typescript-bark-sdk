@@ -133,7 +133,7 @@ export default class BarkClient {
   protected miscellaneousFunctionErrorProducer(e: unknown): BarkResponseError {
     if (e instanceof AxiosError) {
       return new BarkResponseError(
-        BarkResponseErrorType.SERVER_HAS_NO_RESPONSE,
+        BarkResponseErrorType.SERVER_HAS_NOT_RESPONSE,
         "Server has no response",
         e,
       );
