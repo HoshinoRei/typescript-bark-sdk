@@ -36,9 +36,9 @@ npm i @hoshinorei/bark-sdk
 #### Push a simple message
 
 ```ts
-import { BarkClient, BarkMessageBuilder } from "@hoshinorei/bark-sdk";
+import { BarkClient, BarkMessageBuilder } from "@hoshinorei/bark-sdk"
 
-const barkClient = new BarkClient("<your_bark_server_url>");
+const barkClient = new BarkClient("<your_bark_server_url>")
 
 barkClient.push(
   new BarkMessageBuilder()
@@ -46,7 +46,7 @@ barkClient.push(
     .deviceKey("<your_device_key>")
     .title("<your_title>")
     .build(),
-);
+)
 ```
 
 #### Push an encrypted message
@@ -56,9 +56,9 @@ import {
   BarkClient,
   BarkEncryptedPushAlgorithm,
   BarkMessageBuilder,
-} from "@hoshinorei/bark-sdk";
+} from "@hoshinorei/bark-sdk"
 
-const barkClient = new BarkClient("<your_bark_server_url>");
+const barkClient = new BarkClient("<your_bark_server_url>")
 
 barkClient.pushEncrypted(
   "<your_device_key>",
@@ -66,7 +66,7 @@ barkClient.pushEncrypted(
   BarkEncryptedPushAlgorithm.AES_128_CBC, // You can view the supported algorithms via the link below
   "<your_key>",
   "<your_iv>",
-);
+)
 ```
 
 [Supported algorithm](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/BarkEncryptedPushAlgorithm#enumeration-members)

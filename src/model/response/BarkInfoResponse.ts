@@ -7,9 +7,9 @@
  * @property version The version of the Bark server
  */
 export default interface BarkInfoResponse {
-  arch?: string;
-  build?: Date;
-  commit?: string;
-  devices?: number;
-  version?: string;
+  arch?: string
+  build?: Date
+  commit?: string
+  devices?: number
+  version?: string
 }

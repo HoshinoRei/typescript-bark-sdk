@@ -5,4 +5,4 @@ enum BarkClientUrl {
   PUSH = "/push",
 }
 
-export default BarkClientUrl;
+export default BarkClientUrl
