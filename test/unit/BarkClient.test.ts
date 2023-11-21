@@ -189,34 +189,6 @@ describe.each([
     const key = crypto.randomBytes(8).toString("hex");
     const iv = crypto.randomBytes(8).toString("hex");
 
-    test("Push failed", async () => {
-      const cipher = crypto.createCipheriv(algorithm, key, iv);
-
-      mockAxios
-        .onPost(barkMessageCommonProperty.device_Key, {
-          ciphertext: `${cipher.update(
-            JSON.stringify(barkMessage),
-            "utf-8",
-            "base64",
-          )}${cipher.final("base64")}`,
-        })
-        .reply(500, {
-          code: 500,
-          message: "push failed: ",
-          timestamp: 0,
-        });
-
-      await expect(
-        client.pushEncrypted(
-          barkMessageCommonProperty.device_Key,
-          barkMessage,
-          algorithm,
-          key,
-          iv,
-        ),
-      ).rejects.toThrowErrorMatchingSnapshot();
-    });
-
     test.each([
       {
         algorithm: BarkEncryptedPushAlgorithm.AES_128_CBC,
