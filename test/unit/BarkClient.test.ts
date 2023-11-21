@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "@jest/globals";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import crypto from "crypto";
+import CryptoJS from "crypto-js";
 
 import BarkClient from "../../src/lib/BarkClient";
 import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder";
@@ -186,8 +186,8 @@ describe.each([
     delete barkMessage.device_key;
 
     const algorithm = BarkEncryptedPushAlgorithm.AES_128_CBC;
-    const key = crypto.randomBytes(8).toString("hex");
-    const iv = crypto.randomBytes(8).toString("hex");
+    const key = CryptoJS.lib.WordArray.random(8).toString();
+    const iv = CryptoJS.lib.WordArray.random(8).toString();
 
     test.each([
       {
@@ -222,7 +222,7 @@ describe.each([
             barkMessageCommonProperty.device_Key,
             barkMessage,
             algorithm,
-            crypto.randomBytes(1).toString("hex"),
+            CryptoJS.lib.WordArray.random(1).toString(),
             iv,
           ),
         ).rejects.toThrowError(
@@ -241,7 +241,7 @@ describe.each([
           barkMessage,
           algorithm,
           key,
-          crypto.randomBytes(1).toString("hex"),
+          CryptoJS.lib.WordArray.random(1).toString(),
         ),
       ).rejects.toThrowError(
         new BarkEncryptionError(
