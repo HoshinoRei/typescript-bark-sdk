@@ -131,7 +131,7 @@ export default class BarkClient {
     );
 
     try {
-      await axios.post<BarkResponse>(
+      await axios.post(
         deviceKey,
         {
           ciphertext: `${CryptoJS.enc.Base64.stringify(cipher.ciphertext)}`,
