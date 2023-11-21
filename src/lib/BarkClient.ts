@@ -1,24 +1,24 @@
-import axios, { AxiosError } from "axios";
-import CryptoJS from "crypto-js";
+import axios, { AxiosError } from "axios"
+import CryptoJS from "crypto-js"
 
-import BarkClientUrl from "../model/enumeration/BarkClientUrl";
-import BarkEncryptedPushAlgorithm from "../model/enumeration/BarkEncryptedPushAlgorithm";
-import BarkEncryptionErrorType from "../model/enumeration/BarkEncryptionErrorType";
-import BarkResponseErrorType from "../model/enumeration/BarkResponseErrorType";
-import BarkEncryptionError from "../model/error/BarkEncryptionError";
-import BarkResponseError from "../model/error/BarkResponseError";
-import CryptoJsKeySizeError from "../model/error/CryptoJsKeySizeError";
-import CryptoJsModeError from "../model/error/CryptoJsModeError";
-import type BarkMessage from "../model/request/BarkMessage";
-import type BarkInfoResponse from "../model/response/BarkInfoResponse";
-import type BarkResponse from "../model/response/BarkResponse";
+import BarkClientUrl from "../model/enumeration/BarkClientUrl"
+import BarkEncryptedPushAlgorithm from "../model/enumeration/BarkEncryptedPushAlgorithm"
+import BarkEncryptionErrorType from "../model/enumeration/BarkEncryptionErrorType"
+import BarkResponseErrorType from "../model/enumeration/BarkResponseErrorType"
+import BarkEncryptionError from "../model/error/BarkEncryptionError"
+import BarkResponseError from "../model/error/BarkResponseError"
+import CryptoJsKeySizeError from "../model/error/CryptoJsKeySizeError"
+import CryptoJsModeError from "../model/error/CryptoJsModeError"
+import type BarkMessage from "../model/request/BarkMessage"
+import type BarkInfoResponse from "../model/response/BarkInfoResponse"
+import type BarkResponse from "../model/response/BarkResponse"
 
 /**
  * A class to communicate with Bark server
  */
 export default class BarkClient {
   constructor(serverAddress: string = "https://api.day.app") {
-    axios.defaults.baseURL = serverAddress;
+    axios.defaults.baseURL = serverAddress
   }
 
   /**
@@ -29,9 +29,9 @@ export default class BarkClient {
    */
   async health(): Promise<void> {
     try {
-      await axios.get<string>(BarkClientUrl.HEALTHZ);
+      await axios.get<string>(BarkClientUrl.HEALTHZ)
     } catch (e) {
-      throw this.miscellaneousFunctionErrorProducer(e);
+      throw this.miscellaneousFunctionErrorProducer(e)
     }
   }
 
@@ -44,12 +44,12 @@ export default class BarkClient {
   async info(): Promise<BarkInfoResponse> {
     try {
       const { data } = await axios.get<{
-        arch?: string;
-        build?: string;
-        commit?: string;
-        devices?: number;
-        version?: string;
-      }>(BarkClientUrl.INFO);
+        arch?: string
+        build?: string
+        commit?: string
+        devices?: number
+        version?: string
+      }>(BarkClientUrl.INFO)
       return {
         arch: data.arch,
         build:
@@ -59,9 +59,9 @@ export default class BarkClient {
         commit: data.commit,
         devices: data.devices,
         version: data.version,
-      };
+      }
     } catch (e) {
-      throw this.miscellaneousFunctionErrorProducer(e);
+      throw this.miscellaneousFunctionErrorProducer(e)
     }
   }
 
@@ -73,9 +73,9 @@ export default class BarkClient {
    */
   async ping(): Promise<void> {
     try {
-      await axios.get<BarkResponse>(BarkClientUrl.PING);
+      await axios.get<BarkResponse>(BarkClientUrl.PING)
     } catch (e) {
-      throw this.miscellaneousFunctionErrorProducer(e);
+      throw this.miscellaneousFunctionErrorProducer(e)
     }
   }
 
@@ -88,9 +88,9 @@ export default class BarkClient {
    */
   async push(message: BarkMessage): Promise<void> {
     try {
-      await axios.post<BarkResponse>(BarkClientUrl.PUSH, message);
+      await axios.post<BarkResponse>(BarkClientUrl.PUSH, message)
     } catch (e) {
-      throw this.pushErrorProducer(e);
+      throw this.pushErrorProducer(e)
     }
   }
 
@@ -115,10 +115,10 @@ export default class BarkClient {
     key: string,
     iv: string,
   ): Promise<void> {
-    this.checkKey(algorithm, key);
-    this.checkIv(iv);
+    this.checkKey(algorithm, key)
+    this.checkIv(iv)
 
-    const { mode, keySize } = this.cryptoJsModeAndKeySizeProducer(algorithm);
+    const { mode, keySize } = this.cryptoJsModeAndKeySizeProducer(algorithm)
 
     const cipher = CryptoJS.AES.encrypt(
       JSON.stringify(message),
@@ -128,7 +128,7 @@ export default class BarkClient {
         iv: CryptoJS.enc.Utf8.parse(iv),
         keySize,
       },
-    );
+    )
 
     try {
       await axios.post<BarkResponse>(
@@ -141,9 +141,9 @@ export default class BarkClient {
             "Content-Type": "application/x-www-form-urlencoded",
           },
         },
-      );
+      )
     } catch (e) {
-      throw this.pushErrorProducer(e);
+      throw this.pushErrorProducer(e)
     }
   }
 
@@ -156,40 +156,38 @@ export default class BarkClient {
   protected cryptoJsModeAndKeySizeProducer(
     algorithm: BarkEncryptedPushAlgorithm,
   ): {
-    mode: typeof CryptoJS.mode.CBC | typeof CryptoJS.mode.ECB;
-    keySize: number;
+    mode: typeof CryptoJS.mode.CBC | typeof CryptoJS.mode.ECB
+    keySize: number
   } {
-    let keySize, mode;
-    const array = algorithm.split("-", 3);
+    let keySize, mode
+    const array = algorithm.split("-", 3)
 
     switch (array[1]) {
       case "128":
-        keySize = 128;
-        break;
+        keySize = 128
+        break
       case "192":
-        keySize = 192;
-        break;
+        keySize = 192
+        break
       case "256":
-        keySize = 256;
-        break;
+        keySize = 256
+        break
       default:
-        throw new CryptoJsKeySizeError(
-          "The algorithm has not a valid key size",
-        );
+        throw new CryptoJsKeySizeError("The algorithm has not a valid key size")
     }
     switch (array[2]) {
       case "cbc":
-        mode = CryptoJS.mode.CBC;
-        break;
+        mode = CryptoJS.mode.CBC
+        break
       case "ecb":
-        mode = CryptoJS.mode.ECB;
-        break;
+        mode = CryptoJS.mode.ECB
+        break
       default:
         throw new CryptoJsModeError(
           "The algorithm has not a valid CryptoJS mode",
-        );
+        )
     }
-    return { mode, keySize };
+    return { mode, keySize }
   }
 
   /**
@@ -203,18 +201,18 @@ export default class BarkClient {
         BarkResponseErrorType.SERVER_HAS_NOT_RESPONSE,
         "Server has not response",
         e,
-      );
+      )
     } else if (e instanceof Error) {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
         e,
-      );
+      )
     } else {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
-      );
+      )
     }
   }
 
@@ -232,9 +230,9 @@ export default class BarkClient {
           throw new BarkEncryptionError(
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             "The length of key is not 16",
-          );
+          )
         }
-        break;
+        break
       }
       case BarkEncryptedPushAlgorithm.AES_192_CBC:
       case BarkEncryptedPushAlgorithm.AES_192_ECB: {
@@ -242,9 +240,9 @@ export default class BarkClient {
           throw new BarkEncryptionError(
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             "The length of key is not 24",
-          );
+          )
         }
-        break;
+        break
       }
       case BarkEncryptedPushAlgorithm.AES_256_CBC:
       case BarkEncryptedPushAlgorithm.AES_256_ECB: {
@@ -252,9 +250,9 @@ export default class BarkClient {
           throw new BarkEncryptionError(
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             "The length of key is not 32",
-          );
+          )
         }
-        break;
+        break
       }
     }
   }
@@ -269,7 +267,7 @@ export default class BarkClient {
       throw new BarkEncryptionError(
         BarkEncryptionErrorType.IV_IS_NOT_CORRECT,
         "The length of iv is not 16",
-      );
+      )
     }
   }
 
@@ -280,12 +278,12 @@ export default class BarkClient {
    */
   protected pushErrorProducer(e: unknown): BarkResponseError {
     if (e instanceof AxiosError) {
-      const data: BarkResponse = e.response?.data;
+      const data: BarkResponse = e.response?.data
 
       const failedToGetDeviceTokenRegularExpression =
-        /failed to get device token: (.*)/;
-      const requestBindFailedRegularExpression = /request bind failed: (.*)/;
-      const pushFailedRegularExpression = /push failed: (.*)/;
+        /failed to get device token: (.*)/
+      const requestBindFailedRegularExpression = /request bind failed: (.*)/
+      const pushFailedRegularExpression = /push failed: (.*)/
 
       if (
         e.response?.status === 400 &&
@@ -295,35 +293,35 @@ export default class BarkClient {
           BarkResponseErrorType.DEVICE_KEY_IS_EMPTY,
           "Device key is empty",
           e,
-        );
+        )
       } else if (
         e.response?.status === 400 &&
         data.message !== undefined &&
         failedToGetDeviceTokenRegularExpression.test(data.message)
       ) {
         const regularExpressionExecArray =
-          failedToGetDeviceTokenRegularExpression.exec(data.message);
+          failedToGetDeviceTokenRegularExpression.exec(data.message)
         return new BarkResponseError(
           BarkResponseErrorType.FAILED_TO_GET_DEVICE_TOKEN,
           regularExpressionExecArray != null
             ? `Failed to get device token: ${regularExpressionExecArray[1]}`
             : "Failed to get device token",
           e,
-        );
+        )
       } else if (
         e.response?.status === 400 &&
         data.message !== undefined &&
         requestBindFailedRegularExpression.test(data.message)
       ) {
         const regularExpressionExecArray =
-          requestBindFailedRegularExpression.exec(data.message);
+          requestBindFailedRegularExpression.exec(data.message)
         return new BarkResponseError(
           BarkResponseErrorType.REQUEST_BIND_FAILED,
           regularExpressionExecArray != null
             ? `Request bind failed: ${regularExpressionExecArray[1]}`
             : "Request bind failed",
           e,
-        );
+        )
       } else if (
         e.response?.status === 500 &&
         data.message !== undefined &&
@@ -331,32 +329,32 @@ export default class BarkClient {
       ) {
         const regularExpressionExecArray = pushFailedRegularExpression.exec(
           data.message,
-        );
+        )
         return new BarkResponseError(
           BarkResponseErrorType.PUSH_FAILED,
           regularExpressionExecArray != null
             ? `Push failed: ${regularExpressionExecArray[1]}`
             : "Push failed",
           e,
-        );
+        )
       } else {
         return new BarkResponseError(
           BarkResponseErrorType.UNKNOWN_ERROR,
           "Unknown error",
           e,
-        );
+        )
       }
     } else if (e instanceof Error) {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
         e,
-      );
+      )
     } else {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
-      );
+      )
     }
   }
 }

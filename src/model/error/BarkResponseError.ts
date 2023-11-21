@@ -1,4 +1,4 @@
-import type BarkResponseErrorType from "../enumeration/BarkResponseErrorType";
+import type BarkResponseErrorType from "../enumeration/BarkResponseErrorType"
 
 /**
  * Bark response error
@@ -7,14 +7,14 @@ import type BarkResponseErrorType from "../enumeration/BarkResponseErrorType";
  * @property cause
  */
 export default class BarkResponseError extends Error {
-  type: BarkResponseErrorType;
-  message: string;
-  cause?: Error;
+  type: BarkResponseErrorType
+  message: string
+  cause?: Error
 
   constructor(type: BarkResponseErrorType, message: string, cause?: Error) {
-    super(message);
-    this.type = type;
-    this.message = message;
-    this.cause = cause;
+    super(message)
+    this.type = type
+    this.message = message
+    this.cause = cause
   }
 }

@@ -1,39 +1,39 @@
-import { afterEach, describe, expect, test } from "@jest/globals";
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
-import CryptoJS from "crypto-js";
+import { afterEach, describe, expect, test } from "@jest/globals"
+import axios from "axios"
+import MockAdapter from "axios-mock-adapter"
+import CryptoJS from "crypto-js"
 
-import BarkClient from "../../src/lib/BarkClient";
-import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder";
-import BarkClientUrl from "../../src/model/enumeration/BarkClientUrl";
-import BarkEncryptedPushAlgorithm from "../../src/model/enumeration/BarkEncryptedPushAlgorithm";
-import BarkEncryptionErrorType from "../../src/model/enumeration/BarkEncryptionErrorType";
-import BarkMessageLevel from "../../src/model/enumeration/BarkMessageLevel";
-import BarkMessageSound from "../../src/model/enumeration/BarkMessageSound";
-import BarkEncryptionError from "../../src/model/error/BarkEncryptionError";
-import type BarkMessage from "../../src/model/request/BarkMessage";
+import BarkClient from "../../src/lib/BarkClient"
+import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder"
+import BarkClientUrl from "../../src/model/enumeration/BarkClientUrl"
+import BarkEncryptedPushAlgorithm from "../../src/model/enumeration/BarkEncryptedPushAlgorithm"
+import BarkEncryptionErrorType from "../../src/model/enumeration/BarkEncryptionErrorType"
+import BarkMessageLevel from "../../src/model/enumeration/BarkMessageLevel"
+import BarkMessageSound from "../../src/model/enumeration/BarkMessageSound"
+import BarkEncryptionError from "../../src/model/error/BarkEncryptionError"
+import type BarkMessage from "../../src/model/request/BarkMessage"
 
-const client = new BarkClient();
+const client = new BarkClient()
 
-const mockAxios = new MockAdapter(axios);
+const mockAxios = new MockAdapter(axios)
 
 afterEach(() => {
-  mockAxios.reset();
-});
+  mockAxios.reset()
+})
 
 describe("Health", () => {
   test("Server is healthy", async () => {
-    mockAxios.onGet(BarkClientUrl.HEALTHZ).reply(200, "ok");
+    mockAxios.onGet(BarkClientUrl.HEALTHZ).reply(200, "ok")
 
-    await expect(client.health()).resolves.not.toThrowError();
-  });
+    await expect(client.health()).resolves.not.toThrowError()
+  })
 
   test("Server is unhealthy", async () => {
-    mockAxios.onGet(BarkClientUrl.HEALTHZ).timeout();
+    mockAxios.onGet(BarkClientUrl.HEALTHZ).timeout()
 
-    await expect(client.health()).rejects.toThrowErrorMatchingSnapshot();
-  });
-});
+    await expect(client.health()).rejects.toThrowErrorMatchingSnapshot()
+  })
+})
 
 describe("Info", () => {
   test("Server respond info", async () => {
@@ -43,7 +43,7 @@ describe("Info", () => {
       commit: "dc8de8416c9c2c6c8cd6b95a85ff09c5653dfd11",
       devices: 1,
       version: "v2.1.5",
-    });
+    })
 
     await expect(client.info()).resolves.toEqual({
       arch: "linux/arm64",
@@ -51,15 +51,15 @@ describe("Info", () => {
       commit: "dc8de8416c9c2c6c8cd6b95a85ff09c5653dfd11",
       devices: 1,
       version: "v2.1.5",
-    });
-  });
+    })
+  })
 
   test("Server don't respond info", async () => {
-    mockAxios.onGet(BarkClientUrl.INFO).timeout();
+    mockAxios.onGet(BarkClientUrl.INFO).timeout()
 
-    await expect(client.info()).rejects.toThrowErrorMatchingSnapshot();
-  });
-});
+    await expect(client.info()).rejects.toThrowErrorMatchingSnapshot()
+  })
+})
 
 describe("Ping", () => {
   test("Server is running", async () => {
@@ -67,17 +67,17 @@ describe("Ping", () => {
       code: 200,
       message: "pong",
       timestamp: Date.parse(new Date().toString()),
-    });
+    })
 
-    await expect(client.ping()).resolves.not.toThrowError();
-  });
+    await expect(client.ping()).resolves.not.toThrowError()
+  })
 
   test("Server is not running", async () => {
-    mockAxios.onGet(BarkClientUrl.PING).timeout();
+    mockAxios.onGet(BarkClientUrl.PING).timeout()
 
-    await expect(client.info()).rejects.toThrowErrorMatchingSnapshot();
-  });
-});
+    await expect(client.info()).rejects.toThrowErrorMatchingSnapshot()
+  })
+})
 
 const barkMessageCommonProperty = {
   badge: 1,
@@ -89,7 +89,7 @@ const barkMessageCommonProperty = {
   level: BarkMessageLevel.ACTIVE,
   sound: BarkMessageSound.ALARM,
   title: "Test title",
-};
+}
 
 describe.each([
   {
@@ -119,75 +119,75 @@ describe.each([
 ])("Push $#", (barkMessage: BarkMessage) => {
   describe("Normal Push", () => {
     test("Device key is empty", async () => {
-      delete barkMessage.device_key;
+      delete barkMessage.device_key
 
       mockAxios.onPost(BarkClientUrl.PUSH, barkMessage).reply(400, {
         code: 400,
         message: "device key is empty",
         timestamp: 0,
-      });
+      })
 
       await expect(
         client.push(barkMessage),
-      ).rejects.toThrowErrorMatchingSnapshot();
-    });
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
 
     test("Device key is not registered", async () => {
-      barkMessage.device_key = "I am not a device key";
+      barkMessage.device_key = "I am not a device key"
 
       mockAxios.onPost(BarkClientUrl.PUSH, barkMessage).reply(400, {
         code: 400,
         message:
           "failed to get device token: failed to get [] devices token from database",
         timestamp: 0,
-      });
+      })
 
       await expect(
         client.push(barkMessage),
-      ).rejects.toThrowErrorMatchingSnapshot();
-    });
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
 
     test("Request bind failed", async () => {
       mockAxios.onPost(BarkClientUrl.PUSH, barkMessage).reply(400, {
         code: 400,
         message: `request bind failed: invalid character '\\"' after object key:value pair`,
         timestamp: 0,
-      });
+      })
 
       await expect(
         client.push(barkMessage),
-      ).rejects.toThrowErrorMatchingSnapshot();
-    });
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
 
     test("Push failed", async () => {
       mockAxios.onPost(BarkClientUrl.PUSH, barkMessage).reply(500, {
         code: 500,
         message: "push failed: ",
         timestamp: 0,
-      });
+      })
 
       await expect(
         client.push(barkMessage),
-      ).rejects.toThrowErrorMatchingSnapshot();
-    });
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
 
     test("Succeed", async () => {
       mockAxios.onPost(BarkClientUrl.PUSH, barkMessage).reply(200, {
         code: 200,
         message: "success",
         timestamp: 0,
-      });
+      })
 
-      await expect(client.push(barkMessage)).resolves.not.toThrow();
-    });
-  });
+      await expect(client.push(barkMessage)).resolves.not.toThrow()
+    })
+  })
 
   describe("Encrypted push", () => {
-    delete barkMessage.device_key;
+    delete barkMessage.device_key
 
-    const algorithm = BarkEncryptedPushAlgorithm.AES_128_CBC;
-    const key = CryptoJS.lib.WordArray.random(8).toString();
-    const iv = CryptoJS.lib.WordArray.random(8).toString();
+    const algorithm = BarkEncryptedPushAlgorithm.AES_128_CBC
+    const key = CryptoJS.lib.WordArray.random(8).toString()
+    const iv = CryptoJS.lib.WordArray.random(8).toString()
 
     test.each([
       {
@@ -230,9 +230,9 @@ describe.each([
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             `The length of key is not ${length}`,
           ),
-        );
+        )
       },
-    );
+    )
 
     test("The length of iv is not 16", async () => {
       await expect(
@@ -248,7 +248,7 @@ describe.each([
           BarkEncryptionErrorType.IV_IS_NOT_CORRECT,
           "The length of iv is not 16",
         ),
-      );
-    });
-  });
-});
+      )
+    })
+  })
+})

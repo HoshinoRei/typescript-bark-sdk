@@ -7,4 +7,4 @@ enum BarkMessageLevel {
   PASSIVE = "passive",
 }
 
-export default BarkMessageLevel;
+export default BarkMessageLevel

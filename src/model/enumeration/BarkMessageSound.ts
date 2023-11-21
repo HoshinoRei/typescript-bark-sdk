@@ -36,4 +36,4 @@ enum BarkMessageSound {
   UPDATE = "update",
 }
 
-export default BarkMessageSound;
+export default BarkMessageSound

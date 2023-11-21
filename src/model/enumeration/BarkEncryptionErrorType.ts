@@ -6,4 +6,4 @@ enum BarkEncryptionErrorType {
   IV_IS_NOT_CORRECT,
 }
 
-export default BarkEncryptionErrorType;
+export default BarkEncryptionErrorType
