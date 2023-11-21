@@ -241,7 +241,7 @@ describe.each([
           barkMessage,
           algorithm,
           key,
-          "1",
+          crypto.randomBytes(1).toString("hex"),
         ),
       ).rejects.toThrowError(
         new BarkEncryptionError(
