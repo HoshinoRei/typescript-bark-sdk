@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import crypto from "crypto";
+import CryptoJS from "crypto-js";
 
 import BarkClientUrl from "../model/enumeration/BarkClientUrl";
 import BarkEncryptedPushAlgorithm from "../model/enumeration/BarkEncryptedPushAlgorithm";
@@ -7,6 +7,8 @@ import BarkEncryptionErrorType from "../model/enumeration/BarkEncryptionErrorTyp
 import BarkResponseErrorType from "../model/enumeration/BarkResponseErrorType";
 import BarkEncryptionError from "../model/error/BarkEncryptionError";
 import BarkResponseError from "../model/error/BarkResponseError";
+import CryptoJsKeySizeError from "../model/error/CryptoJsKeySizeError";
+import CryptoJsModeError from "../model/error/CryptoJsModeError";
 import type BarkMessage from "../model/request/BarkMessage";
 import type BarkInfoResponse from "../model/response/BarkInfoResponse";
 import type BarkResponse from "../model/response/BarkResponse";
@@ -116,17 +118,23 @@ export default class BarkClient {
     this.checkKey(algorithm, key);
     this.checkIv(iv);
 
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
+    const { mode, keySize } = this.cryptoJsModeAndKeySizeProducer(algorithm);
+
+    const cipher = CryptoJS.AES.encrypt(
+      JSON.stringify(message),
+      CryptoJS.enc.Utf8.parse(key),
+      {
+        mode,
+        iv: CryptoJS.enc.Utf8.parse(iv),
+        keySize,
+      },
+    );
 
     try {
       await axios.post(
         deviceKey,
         {
-          ciphertext: `${cipher.update(
-            JSON.stringify(message),
-            "utf-8",
-            "base64",
-          )}${cipher.final("base64")}`,
+          ciphertext: `${CryptoJS.enc.Base64.stringify(cipher.ciphertext)}`,
         },
         {
           headers: {
@@ -137,6 +145,51 @@ export default class BarkClient {
     } catch (e) {
       throw this.pushErrorProducer(e);
     }
+  }
+
+  /**
+   * Produces the CryptoJS mode and key size based on the provided algorithm.
+   * @param algorithm - The BarkEncryptedPushAlgorithm to extract mode and key size from.
+   * @returns An object containing the mode (CBC or ECB) and keySize (128, 192, or 256).
+   * @throws {CryptoJsModeError} if the algorithm does not have a valid key size or CryptoJS mode.
+   */
+  protected cryptoJsModeAndKeySizeProducer(
+    algorithm: BarkEncryptedPushAlgorithm,
+  ): {
+    mode: typeof CryptoJS.mode.CBC | typeof CryptoJS.mode.ECB;
+    keySize: number;
+  } {
+    let keySize, mode;
+    const array = algorithm.split("-", 3);
+
+    switch (array[1]) {
+      case "128":
+        keySize = 128;
+        break;
+      case "192":
+        keySize = 192;
+        break;
+      case "256":
+        keySize = 256;
+        break;
+      default:
+        throw new CryptoJsKeySizeError(
+          "The algorithm has not a valid key size",
+        );
+    }
+    switch (array[2]) {
+      case "cbc":
+        mode = CryptoJS.mode.CBC;
+        break;
+      case "ecb":
+        mode = CryptoJS.mode.ECB;
+        break;
+      default:
+        throw new CryptoJsModeError(
+          "The algorithm has not a valid CryptoJS mode",
+        );
+    }
+    return { mode, keySize };
   }
 
   /**
