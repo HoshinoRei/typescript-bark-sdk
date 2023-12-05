@@ -30,7 +30,7 @@
     "format:check": "prettier -c .",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
-    "test": "jest --slient=false --verbose=true"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "axios": "^1.4.0",

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals"
+import { describe, expect, test } from "vitest"
 
 import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder"
 import BarkMessageErrorType from "../../src/model/enumeration/BarkMessageErrorType"
