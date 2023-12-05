@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Health Server is unhealthy 1`] = `"Server has not response"`;
+exports[`Health > Server is unhealthy 1`] = `[Error: Server has not response]`;
 
-exports[`Info Server don't respond info 1`] = `"Server has not response"`;
+exports[`Info > Server don't respond info 1`] = `[Error: Server has not response]`;
 
-exports[`Ping Server is not running 1`] = `"Server has not response"`;
+exports[`Ping > Server is not running 1`] = `[Error: Server has not response]`;
 
-exports[`Push 0 Normal Push Device key is empty 1`] = `"Device key is empty"`;
+exports[`Push $# > Normal Push > Device key is empty 1`] = `[Error: Device key is empty]`;
 
-exports[`Push 0 Normal Push Device key is not registered 1`] = `"Failed to get device token: failed to get [] devices token from database"`;
+exports[`Push $# > Normal Push > Device key is empty 2`] = `[Error: Device key is empty]`;
 
-exports[`Push 0 Normal Push Push failed 1`] = `"Push failed: "`;
+exports[`Push $# > Normal Push > Device key is not registered 1`] = `[Error: Failed to get device token: failed to get [] devices token from database]`;
 
-exports[`Push 0 Normal Push Request bind failed 1`] = `"Request bind failed: invalid character '\\"' after object key:value pair"`;
+exports[`Push $# > Normal Push > Device key is not registered 2`] = `[Error: Failed to get device token: failed to get [] devices token from database]`;
 
-exports[`Push 1 Normal Push Device key is empty 1`] = `"Device key is empty"`;
+exports[`Push $# > Normal Push > Push failed 1`] = `[Error: Push failed: ]`;
 
-exports[`Push 1 Normal Push Device key is not registered 1`] = `"Failed to get device token: failed to get [] devices token from database"`;
+exports[`Push $# > Normal Push > Push failed 2`] = `[Error: Push failed: ]`;
 
-exports[`Push 1 Normal Push Push failed 1`] = `"Push failed: "`;
+exports[`Push $# > Normal Push > Request bind failed 1`] = `[Error: Request bind failed: invalid character '\\"' after object key:value pair]`;
 
-exports[`Push 1 Normal Push Request bind failed 1`] = `"Request bind failed: invalid character '\\"' after object key:value pair"`;
+exports[`Push $# > Normal Push > Request bind failed 2`] = `[Error: Request bind failed: invalid character '\\"' after object key:value pair]`;

@@ -17,8 +17,8 @@ on:
       - src/**
       - test/**
 jobs:
-  jest:
-    name: Jest
+  vitest:
+    name: Vitest
     permissions:
       checks: write
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
         if: success() || failure()
         uses: phoenix-actions/test-reporting@v12
         with:
-          name: Jest Tests in Node ${{ matrix.node-version }}
-          path: coverage/junit.xml
+          name: Vitest Tests in Node ${{ matrix.node-version }}
+          path: test-result/junit.xml
           output-to: step-summary
           reporter: jest-junit

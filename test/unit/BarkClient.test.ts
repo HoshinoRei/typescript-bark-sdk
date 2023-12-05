@@ -1,7 +1,7 @@
-import { afterEach, describe, expect, test } from "@jest/globals"
 import axios from "axios"
 import MockAdapter from "axios-mock-adapter"
 import CryptoJS from "crypto-js"
+import { afterEach, describe, expect, test } from "vitest"
 
 import BarkClient from "../../src/lib/BarkClient"
 import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder"

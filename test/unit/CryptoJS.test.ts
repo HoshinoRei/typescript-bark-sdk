@@ -1,5 +1,5 @@
-import { describe, expect, test } from "@jest/globals"
 import CryptoJS from "crypto-js"
+import { describe, expect, test } from "vitest"
 
 describe("CryptoJS", () => {
   test("Encrypt message", () => {
