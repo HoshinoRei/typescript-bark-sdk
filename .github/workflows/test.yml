@@ -21,6 +21,7 @@ jobs:
     name: Vitest
     permissions:
       checks: write
+      pull-requests: write
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,3 +55,6 @@ jobs:
           path: test-result/junit.xml
           output-to: step-summary
           reporter: jest-junit
+      - name: Publish coverage report
+        if: success() || failure()
+        uses: davelosert/vitest-coverage-report-action@v2
