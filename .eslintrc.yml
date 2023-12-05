@@ -9,7 +9,7 @@ overrides:
       node: true
     files:
       - .eslintrc.{js,cjs}
-      - jest.config.ts
+      - vite.config.ts
     parserOptions:
       sourceType: script
 parserOptions:
