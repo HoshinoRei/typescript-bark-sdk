@@ -2,6 +2,7 @@ coverage
 dist
 docs
 node_modules
+test-result
 wiki
 
 # IntelliJ IDEA
