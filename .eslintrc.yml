@@ -10,6 +10,7 @@ overrides:
     files:
       - .eslintrc.{js,cjs}
       - vite.config.ts
+      - vitest.config.ts
     parserOptions:
       sourceType: script
 parserOptions:
