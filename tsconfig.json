@@ -24,11 +24,5 @@
 
     "types": ["vitest"]
   },
-  "include": [
-    "src",
-    "test",
-    "jest.config.ts",
-    "vite.config.ts",
-    "vitest.config.ts"
-  ]
+  "include": ["src", "test", "vite.config.ts", "vitest.config.ts"]
 }
