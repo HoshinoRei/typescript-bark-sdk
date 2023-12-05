@@ -42,7 +42,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: pnpm i
-      - name: Run jest
+      - name: Run test
         env:
           CI: true
         run: pnpm run test
