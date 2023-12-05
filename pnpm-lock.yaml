@@ -76,9 +76,6 @@ devDependencies:
   eslint-visitor-keys:
     specifier: ^3.4.1
     version: 3.4.1
-  jest:
-    specifier: ^29.6.2
-    version: 29.7.0(@types/node@20.10.3)(ts-node@10.9.1)
   prettier:
     specifier: 3.1.0
     version: 3.1.0
