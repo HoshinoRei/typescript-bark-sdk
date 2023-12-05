@@ -58,9 +58,6 @@ devDependencies:
   eslint-plugin-sort-class-members:
     specifier: ^1.19.0
     version: 1.19.0(eslint@8.55.0)
-  eslint-visitor-keys:
-    specifier: ^3.4.1
-    version: 3.4.1
   prettier:
     specifier: 3.1.0
     version: 3.1.0
@@ -1730,11 +1727,6 @@ packages:
   /eslint-visitor-keys@2.1.0:
     resolution: {integrity: sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==}
     engines: {node: '>=10'}
-    dev: true
-
-  /eslint-visitor-keys@3.4.1:
-    resolution: {integrity: sha512-pZnmmLwYzf+kWaM/Qgrvpen51upAktaaiI01nsJD/Yr3lMOdNtq0cxkrrg16w64VtisN6okbs7Q8AfGqj4c9fA==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
   /eslint-visitor-keys@3.4.3:
