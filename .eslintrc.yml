@@ -7,7 +7,7 @@ extends:
   - prettier
 overrides:
   - env:
-      node: true
+      browser: false
     files:
       - .eslintrc.{js,cjs}
       - vite.config.ts
