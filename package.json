@@ -17,13 +17,14 @@
   "license": "MIT",
   "author": "HoshinoRei",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc --build --clean && tsc -p tsconfig.prod.json",
+    "build": "tsc && vite build",
     "doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme",
     "format": "prettier --write .",
     "format:check": "prettier -c .",
