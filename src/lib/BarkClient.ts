@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios"
+import axios from "axios"
 import CryptoJS from "crypto-js"
 
 import BarkClientUrl from "../model/enumeration/BarkClientUrl"
@@ -196,7 +196,7 @@ export default class BarkClient {
    * @returns { @link BarkResponseError }
    */
   protected miscellaneousFunctionErrorProducer(e: unknown): BarkResponseError {
-    if (e instanceof AxiosError) {
+    if (axios.isAxiosError(e)) {
       return new BarkResponseError(
         BarkResponseErrorType.SERVER_HAS_NOT_RESPONSE,
         "Server has not response",
@@ -277,7 +277,7 @@ export default class BarkClient {
    * @returns { @link BarkResponseError }
    */
   protected pushErrorProducer(e: unknown): BarkResponseError {
-    if (e instanceof AxiosError) {
+    if (axios.isAxiosError(e)) {
       const data: BarkResponse = e.response?.data
 
       const failedToGetDeviceTokenRegularExpression =
