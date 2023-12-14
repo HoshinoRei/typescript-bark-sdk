@@ -30,8 +30,8 @@ export default class BarkClient {
   async health(): Promise<void> {
     try {
       await axios.get<string>(BarkClientUrl.HEALTHZ)
-    } catch (e) {
-      throw this.miscellaneousFunctionErrorProducer(e)
+    } catch (error) {
+      throw this.miscellaneousFunctionErrorProducer(error)
     }
   }
 
