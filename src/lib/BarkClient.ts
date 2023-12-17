@@ -60,8 +60,8 @@ export default class BarkClient {
         devices: data.devices,
         version: data.version,
       }
-    } catch (e) {
-      throw this.miscellaneousFunctionErrorProducer(e)
+    } catch (error) {
+      throw this.miscellaneousFunctionErrorProducer(error)
     }
   }
 
