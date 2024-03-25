@@ -49,7 +49,7 @@ jobs:
         run: pnpm run test
       - name: Publish Test Report
         if: success() || failure()
-        uses: phoenix-actions/test-reporting@v12
+        uses: phoenix-actions/test-reporting@v13
         with:
           name: Vitest Tests in Node ${{ matrix.node-version }}
           path: test-result/junit.xml
