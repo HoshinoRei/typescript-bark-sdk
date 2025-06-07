@@ -61,11 +61,11 @@ importers:
         specifier: ^1.19.0
         version: 1.21.0(eslint@8.57.1)
       prettier:
-        specifier: 3.3.3
-        version: 3.3.3
+        specifier: 3.5.3
+        version: 3.5.3
       prettier-plugin-packagejson:
         specifier: ^2.4.5
-        version: 2.5.15(prettier@3.3.3)
+        version: 2.5.15(prettier@3.5.3)
       typedoc:
         specifier: ^0.26.2
         version: 0.26.11(typescript@5.8.3)
@@ -1820,8 +1820,8 @@ packages:
       prettier:
         optional: true
 
-  prettier@3.3.3:
-    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+  prettier@3.5.3:
+    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4123,14 +4123,14 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-packagejson@2.5.15(prettier@3.3.3):
+  prettier-plugin-packagejson@2.5.15(prettier@3.5.3):
     dependencies:
       sort-package-json: 3.2.1
       synckit: 0.11.8
     optionalDependencies:
-      prettier: 3.3.3
+      prettier: 3.5.3
 
-  prettier@3.3.3: {}
+  prettier@3.5.3: {}
 
   property-information@7.1.0: {}
 
