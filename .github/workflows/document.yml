@@ -26,4 +26,4 @@ jobs:
       - name: Generate wiki
         run: pnpm run doc
       - name: Publish
-        uses: Andrew-Chen-Wang/github-wiki-action@v4
+        uses: Andrew-Chen-Wang/github-wiki-action@v5
