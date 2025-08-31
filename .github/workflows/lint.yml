@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: pnpm
-          node-version: 21
+          node-version-file: .tool-versions
       - name: Install dependencies
         run: pnpm i
       - name: Check eslint
