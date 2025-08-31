@@ -61,8 +61,5 @@
     "vite": "^7.1.2",
     "vite-plugin-dts": "^4.0.2",
     "vitest": "^2.0.1"
-  },
-  "engines": {
-    "node": "18.x || 20.x || 21.x"
   }
 }
