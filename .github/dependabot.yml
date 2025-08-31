@@ -2,7 +2,7 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     commit-message:
-      prefix: ci(Github Action)
+      prefix: ci(Github Actions)
     directory: /
     open-pull-requests-limit: 1000
     schedule:
