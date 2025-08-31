@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: pnpm
-          node-version: ${{ matrix.node-version }}
+          node-version-file: .tool-versions
       - name: Install dependencies
         run: pnpm i
       - name: Run test
