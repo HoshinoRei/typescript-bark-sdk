@@ -52,7 +52,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-sort-class-members": "^1.19.0",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "prettier-plugin-packagejson": "^2.4.5",
     "typedoc": "^0.28.5",
     "typedoc-github-wiki-theme": "^2.0.0",
