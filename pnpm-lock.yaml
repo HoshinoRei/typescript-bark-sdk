@@ -59,7 +59,7 @@ importers:
         version: 12.1.1(eslint@8.57.1)
       eslint-plugin-sort-class-members:
         specifier: ^1.19.0
-        version: 1.21.0(eslint@8.57.1)
+        version: 1.22.0(eslint@8.57.1)
       prettier:
         specifier: 3.8.1
         version: 3.8.1
@@ -1402,8 +1402,8 @@ packages:
     peerDependencies:
       eslint: '>=5.0.0'
 
-  eslint-plugin-sort-class-members@1.21.0:
-    resolution: {integrity: sha512-QKV4jvGMu/ge1l4s1TUBC6rqqV/fbABWY7q2EeNpV3FRikoX6KuLhiNvS8UuMi+EERe0hKGrNU9e6ukFDxNnZQ==}
+  eslint-plugin-sort-class-members@1.22.0:
+    resolution: {integrity: sha512-7sFew1y+jeeyL8ir0U9br75GqqMuxQRy9lBNa4IqfIPnpufL9Wt8XZbkUhv46flROcdf/5d2WKf4blFKln65bw==}
     engines: {node: '>=4.0.0'}
     peerDependencies:
       eslint: '>=0.8.0'
@@ -3944,7 +3944,7 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-plugin-sort-class-members@1.21.0(eslint@8.57.1):
+  eslint-plugin-sort-class-members@1.22.0(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
 
