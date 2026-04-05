@@ -35,6 +35,6 @@ This package is a TypeScript SDK for Bark API v2, built as a library for both No
 
 ## Build and test structure
 
-- Build pipeline (`pnpm build`) runs `tsc` then Vite library mode (`vite.config.ts`) to emit ES + UMD bundles and bundled type declarations (via `vite-plugin-dts`).
+- Build pipeline (`pnpm build`) runs `tsc` then Vite library mode (`vite.config.ts`) to emit ES + UMD bundles and bundled type declarations (via `unplugin-dts`).
 - Vitest config (`vitest.config.ts`) merges base Vite config, enables coverage reporters (`json-summary`, `json`, `text`), and writes JUnit output to `test-result/junit.xml` with `verbose` + `junit` reporters.
 - Unit tests in `test/unit/*.test.ts` use `axios-mock-adapter` to simulate Bark server responses and assert both success paths and typed error mapping behavior.
