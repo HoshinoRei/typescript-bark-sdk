@@ -21,8 +21,8 @@ export default tseslint.config(
       ".idea/**",
       ".vscode/**",
       "out/**",
-      ".env"
-    ]
+      ".env",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -38,12 +38,12 @@ export default tseslint.config(
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.es2021
-      }
+        ...globals.es2021,
+      },
     },
     plugins: {
       "simple-import-sort": simpleImportSort,
-      "sort-class-members": sortClassMembers
+      "sort-class-members": sortClassMembers,
     },
     rules: {
       "import/no-unresolved": "off",
@@ -59,31 +59,31 @@ export default tseslint.config(
             "[conventional-private-properties]",
             "constructor",
             "[methods]",
-            "[conventional-private-methods]"
+            "[conventional-private-methods]",
           ],
           accessorPairPositioning: "getThenSet",
           groups: {
             allMethods: [
               {
                 type: "method",
-                sort: "alphabetical"
-              }
-            ]
-          }
-        }
-      ]
-    }
+                sort: "alphabetical",
+              },
+            ],
+          },
+        },
+      ],
+    },
   },
   {
     files: ["vite.config.ts", "vitest.config.ts", "eslint.config.{js,mjs,cjs}"],
     languageOptions: {
       globals: {
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     rules: {
-      "import/no-unresolved": "off"
-    }
+      "import/no-unresolved": "off",
+    },
   },
-  eslintConfigPrettier
+  eslintConfigPrettier,
 )
