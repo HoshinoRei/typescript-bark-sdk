@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
   pull_request_target:
     branches-ignore:
       - dependabot/**
