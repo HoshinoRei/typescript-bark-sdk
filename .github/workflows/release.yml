@@ -3,6 +3,12 @@ on:
   release:
     types:
       - published
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish (for example: 0.6.3)
+        required: true
+        type: string
 jobs:
   release:
     name: Release to JSR
@@ -18,4 +24,9 @@ jobs:
       - name: Run prepublish gates
         run: deno task prepublish
       - name: Publish to JSR
-        run: deno publish
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            deno publish --set-version "${{ inputs.version }}"
+          else
+            deno publish
+          fi
