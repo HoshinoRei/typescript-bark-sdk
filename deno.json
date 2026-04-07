@@ -1,6 +1,6 @@
 {
   "name": "@hoshinorei/bark-sdk",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "tasks": {
     "check": "deno check --unstable-sloppy-imports src/index.ts",
     "coverage": "deno coverage coverage --lcov --output=test-result/lcov.info",
