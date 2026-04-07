@@ -5,27 +5,17 @@ on:
       - published
 jobs:
   release:
-    name: Release
+    name: Release to JSR
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v5
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          cache: pnpm
-          node-version-file: .tool-versions
-          registry-url: https://registry.npmjs.org
-      - name: Install dependencies
-        run: pnpm i
-      - name: Build
-        run: pnpm run build
-      - name: Publish to npm
-        run: pnpm publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+      - name: Run prepublish gates
+        run: deno task prepublish
+      - name: Publish to JSR
+        run: deno publish

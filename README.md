@@ -1,79 +1,95 @@
-# Typescript Bark SDK
+# TypeScript Bark SDK
 
-## Introduction
+A TypeScript SDK for [Bark](https://github.com/Finb/Bark) API v2, published on
+JSR.
 
-An SDK for [Bark](https://github.com/Finb/Bark) written in TypeScript.
+## Overview
 
-### Features
+- Bark API v2 support (`push`, `pushEncrypted`, `health`, `ping`, `info`)
+- Typed request/response models
+- Typed error model for message/encryption/response failures
+- Works in Deno, Node.js (20+), and browsers
 
-- Using Bark V2 API
-- Encrypted push
-- Working in the browser and Node.js
-- Check if the Bark server is healthy
-- Check if the Bark server is running
-- Get Bark server information
-
-### Getting started
-
-#### Install
-
-##### pnpm
-
-```shell
-pnpm add @hoshinorei/bark-sdk
-```
-
-##### Yarn
-
-```shell
-yarn add @hoshinorei/bark-sdk
-```
-
-##### npm
-
-```shell
-npm i @hoshinorei/bark-sdk
-```
-
-#### Push a simple message
+## Getting Started
 
 ```ts
-import { BarkClient, BarkMessageBuilder } from "@hoshinorei/bark-sdk"
+import { BarkClient, BarkMessageBuilder } from "jsr:@hoshinorei/bark-sdk";
 
-const barkClient = new BarkClient("<your_bark_server_url>")
+const client = new BarkClient("https://api.day.app");
 
-barkClient.push(
+await client.push(
   new BarkMessageBuilder()
-    .body("<your_body>")
+    .body("hello")
     .deviceKey("<your_device_key>")
-    .title("<your_title>")
+    .title("Bark")
     .build(),
-)
+);
 ```
 
-#### Push an encrypted message
+## Encrypted Push
 
 ```ts
 import {
   BarkClient,
   BarkEncryptedPushAlgorithm,
   BarkMessageBuilder,
-} from "@hoshinorei/bark-sdk"
+} from "jsr:@hoshinorei/bark-sdk";
 
-const barkClient = new BarkClient("<your_bark_server_url>")
+const client = new BarkClient("https://api.day.app");
 
-barkClient.pushEncrypted(
+await client.pushEncrypted(
   "<your_device_key>",
   new BarkMessageBuilder().body("<your_body>").title("<your_title>").build(),
-  BarkEncryptedPushAlgorithm.AES_128_CBC, // You can view the supported algorithms via the link below
+  BarkEncryptedPushAlgorithm.AES_128_CBC,
   "<your_key>",
   "<your_iv>",
-)
+);
 ```
 
-[Supported algorithm](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/BarkEncryptedPushAlgorithm#enumeration-members)
+> `key`/`iv` must match the selected algorithm requirements.
 
-For More usage, please read [wiki](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/Exports).
+- [Supported algorithms](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/BarkEncryptedPushAlgorithm#enumeration-members)
+- [More examples and usage](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/Exports)
+
+## Public API
+
+### Core
+
+- `BarkClient`
+- `BarkMessageBuilder`
+
+### Enums
+
+- `BarkEncryptedPushAlgorithm`
+- `BarkMessageLevel`
+- `BarkMessageSound`
+- `BarkEncryptionErrorType`
+- `BarkMessageErrorType`
+- `BarkResponseErrorType`
+
+### Errors
+
+- `BarkEncryptionError`
+- `BarkMessageError`
+- `BarkResponseError`
+
+### Types
+
+- `BarkMessage`
+- `BarkInfoResponse`
+- `BarkResponse`
+
+## Development
+
+- Format: `deno task fmt`
+- Format check: `deno task fmt:check`
+- Lint: `deno task lint`
+- Type check: `deno task check`
+- Unit tests: `deno task test`
+- Prepublish gate: `deno task prepublish`
+
+`deno task prepublish` runs formatting/lint/type-check/tests and
+`deno publish --dry-run`.
 
 ## License
 

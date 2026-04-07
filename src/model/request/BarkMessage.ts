@@ -1,5 +1,5 @@
-import type BarkMessageLevel from "../enumeration/BarkMessageLevel"
-import type BarkMessageSound from "../enumeration/BarkMessageSound"
+import type BarkMessageLevel from "../enumeration/BarkMessageLevel.ts";
+import type BarkMessageSound from "../enumeration/BarkMessageSound.ts";
 
 /**
  * Bark message
@@ -17,16 +17,63 @@ import type BarkMessageSound from "../enumeration/BarkMessageSound"
  * @property url URL
  */
 export default interface BarkMessage {
-  badge?: number
-  body?: string
-  category?: string
-  copy?: string
-  device_key?: string
-  group?: string
-  icon?: string
-  isArchive?: string
-  level?: BarkMessageLevel
-  sound?: BarkMessageSound
-  title?: string
-  url?: string
+  /**
+   * Badge number shown on app icon.
+   */
+  badge?: number;
+
+  /**
+   * Notification body text.
+   */
+  body?: string;
+
+  /**
+   * Notification category value.
+   */
+  category?: string;
+
+  /**
+   * Content copied to clipboard.
+   */
+  copy?: string;
+
+  /**
+   * Target Bark device key.
+   */
+  device_key?: string;
+
+  /**
+   * Notification group name.
+   */
+  group?: string;
+
+  /**
+   * Icon URL.
+   */
+  icon?: string;
+
+  /**
+   * Archive flag (`"1"` to archive).
+   */
+  isArchive?: string;
+
+  /**
+   * Notification interruption level.
+   */
+  level?: BarkMessageLevel;
+
+  /**
+   * Notification sound.
+   */
+  sound?: BarkMessageSound;
+
+  /**
+   * Notification title text.
+   */
+  title?: string;
+
+  /**
+   * URL opened when notification is tapped.
+   */
+  url?: string;
 }
