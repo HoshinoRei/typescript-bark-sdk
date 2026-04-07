@@ -7,9 +7,28 @@
  * @property version The version of the Bark server
  */
 export default interface BarkInfoResponse {
-  arch?: string
-  build?: Date
-  commit?: string
-  devices?: number
-  version?: string
+  /**
+   * Bark server architecture string.
+   */
+  arch?: string;
+
+  /**
+   * Bark server build time.
+   */
+  build?: Date;
+
+  /**
+   * Commit hash used to build Bark server.
+   */
+  commit?: string;
+
+  /**
+   * Number of devices registered on Bark server.
+   */
+  devices?: number;
+
+  /**
+   * Bark server version string.
+   */
+  version?: string;
 }

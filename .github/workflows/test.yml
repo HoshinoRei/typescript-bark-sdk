@@ -5,20 +5,18 @@ on:
       - master
     paths:
       - .github/workflows/test.yml
+      - deno.json
       - src/**
-      - package.json
-      - pnpm-lock.yaml
       - test/**
   pull_request:
     paths:
       - .github/workflows/test.yml
-      - package.json
-      - pnpm-lock.yaml
+      - deno.json
       - src/**
       - test/**
 jobs:
-  vitest:
-    name: Vitest
+  deno-test:
+    name: Deno Test
     permissions:
       checks: write
       pull-requests: write
@@ -26,27 +24,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v5
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          cache: pnpm
-          node-version-file: .tool-versions
-      - name: Install dependencies
-        run: pnpm i
-      - name: Run test
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+      - name: Run unit test
         env:
           CI: true
-        run: pnpm run test
+        run: deno task test
       - name: Publish Test Report
         if: success() || failure()
         uses: phoenix-actions/test-reporting@v15
         with:
-          name: Vitest Tests in Node ${{ matrix.node-version }}
+          name: Deno Tests
           path: test-result/junit.xml
           output-to: step-summary
           reporter: jest-junit
-      - name: Publish coverage report
+      - name: Generate lcov report
         if: success() || failure()
-        uses: davelosert/vitest-coverage-report-action@v2
+        run: deno task coverage
+      - name: Upload coverage report
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: test-result/lcov.info
+
