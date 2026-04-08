@@ -2,12 +2,12 @@
 
 import { assertEquals, assertRejects, assertThrows } from "@std/assert";
 
-import BarkClient from "../../src/lib/BarkClient.ts";
-import BarkEncryptedPushAlgorithm from "../../src/model/enumeration/BarkEncryptedPushAlgorithm.ts";
-import BarkMessageSound from "../../src/model/enumeration/BarkMessageSound.ts";
-import EncryptionKeySizeError from "../../src/model/error/EncryptionKeySizeError.ts";
-import EncryptionModeError from "../../src/model/error/EncryptionModeError.ts";
-import type BarkMessage from "../../src/model/request/BarkMessage.ts";
+import BarkClient from "../bark_client.ts";
+import BarkEncryptedPushAlgorithm from "../enums/bark_encrypted_push_algorithm.ts";
+import BarkMessageSound from "../enums/bark_message_sound.ts";
+import EncryptionKeySizeError from "../internal/errors/encryption_key_size_error.ts";
+import EncryptionModeError from "../internal/errors/encryption_mode_error.ts";
+import type BarkMessage from "../types/bark_message.ts";
 
 class TestableBarkClient extends BarkClient {
   encrypt(

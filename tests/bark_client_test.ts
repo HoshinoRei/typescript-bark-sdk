@@ -2,17 +2,17 @@
 
 import { assertEquals, assertRejects } from "@std/assert";
 
-import BarkClient from "../../src/lib/BarkClient.ts";
-import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder.ts";
-import BarkClientUrl from "../../src/model/enumeration/BarkClientUrl.ts";
-import BarkEncryptedPushAlgorithm from "../../src/model/enumeration/BarkEncryptedPushAlgorithm.ts";
-import BarkEncryptionErrorType from "../../src/model/enumeration/BarkEncryptionErrorType.ts";
-import BarkMessageLevel from "../../src/model/enumeration/BarkMessageLevel.ts";
-import BarkMessageSound from "../../src/model/enumeration/BarkMessageSound.ts";
-import BarkResponseErrorType from "../../src/model/enumeration/BarkResponseErrorType.ts";
-import BarkEncryptionError from "../../src/model/error/BarkEncryptionError.ts";
-import BarkResponseError from "../../src/model/error/BarkResponseError.ts";
-import type BarkMessage from "../../src/model/request/BarkMessage.ts";
+import BarkClient from "../bark_client.ts";
+import BarkMessageBuilder from "../bark_message_builder.ts";
+import BarkClientUrl from "../internal/bark_client_url.ts";
+import BarkEncryptedPushAlgorithm from "../enums/bark_encrypted_push_algorithm.ts";
+import BarkEncryptionErrorType from "../enums/bark_encryption_error_type.ts";
+import BarkMessageLevel from "../enums/bark_message_level.ts";
+import BarkMessageSound from "../enums/bark_message_sound.ts";
+import BarkResponseErrorType from "../enums/bark_response_error_type.ts";
+import BarkEncryptionError from "../errors/bark_encryption_error.ts";
+import BarkResponseError from "../errors/bark_response_error.ts";
+import type BarkMessage from "../types/bark_message.ts";
 
 function withMockFetch(
   handler: (

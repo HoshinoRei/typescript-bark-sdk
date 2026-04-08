@@ -6,14 +6,26 @@ on:
     paths:
       - .github/workflows/test.yml
       - deno.json
-      - src/**
-      - test/**
+      - mod.ts
+      - bark_client.ts
+      - bark_message_builder.ts
+      - enums/**
+      - errors/**
+      - types/**
+      - internal/**
+      - tests/**
   pull_request:
     paths:
       - .github/workflows/test.yml
       - deno.json
-      - src/**
-      - test/**
+      - mod.ts
+      - bark_client.ts
+      - bark_message_builder.ts
+      - enums/**
+      - errors/**
+      - types/**
+      - internal/**
+      - tests/**
 jobs:
   deno-test:
     name: Deno Test

@@ -1,8 +1,8 @@
-import BarkMessageErrorType from "../model/enumeration/BarkMessageErrorType.ts";
-import type BarkMessageLevel from "../model/enumeration/BarkMessageLevel.ts";
-import type BarkMessageSound from "../model/enumeration/BarkMessageSound.ts";
-import BarkMessageError from "../model/error/BarkMessageError.ts";
-import type BarkMessage from "../model/request/BarkMessage.ts";
+import BarkMessageErrorType from "./enums/bark_message_error_type.ts";
+import type BarkMessageLevel from "./enums/bark_message_level.ts";
+import type BarkMessageSound from "./enums/bark_message_sound.ts";
+import BarkMessageError from "./errors/bark_message_error.ts";
+import type BarkMessage from "./types/bark_message.ts";
 
 /**
  * A class to help build Bark message properly

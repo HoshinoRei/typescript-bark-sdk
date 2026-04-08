@@ -3,17 +3,29 @@ on:
   pull_request:
     paths:
       - .github/workflows/document.yml
-      - src/**
+      - mod.ts
+      - bark_client.ts
+      - bark_message_builder.ts
+      - enums/**
+      - errors/**
+      - types/**
+      - internal/**
+      - tests/**
       - deno.json
-      - jsr.json
   push:
     branches:
       - master
     paths:
       - .github/workflows/document.yml
-      - src/**
+      - mod.ts
+      - bark_client.ts
+      - bark_message_builder.ts
+      - enums/**
+      - errors/**
+      - types/**
+      - internal/**
+      - tests/**
       - deno.json
-      - jsr.json
 permissions:
   contents: read
 jobs:
@@ -26,4 +38,4 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v2
       - name: Lint docs
-        run: deno doc --lint src/index.ts
+        run: deno doc --lint mod.ts
