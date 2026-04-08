@@ -1,5 +1,5 @@
-import type BarkMessageLevel from "../enumeration/BarkMessageLevel.ts";
-import type BarkMessageSound from "../enumeration/BarkMessageSound.ts";
+import type BarkMessageLevel from "../enums/bark_message_level.ts";
+import type BarkMessageSound from "../enums/bark_message_sound.ts";
 
 /**
  * Bark message

@@ -1,4 +1,4 @@
-import type BarkEncryptionErrorType from "../enumeration/BarkEncryptionErrorType.ts";
+import type BarkEncryptionErrorType from "../enums/bark_encryption_error_type.ts";
 
 /**
  * Bark encryption error

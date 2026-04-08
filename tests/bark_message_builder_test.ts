@@ -2,11 +2,11 @@
 
 import { assertEquals, assertThrows } from "@std/assert";
 
-import BarkMessageBuilder from "../../src/lib/BarkMessageBuilder.ts";
-import BarkMessageLevel from "../../src/model/enumeration/BarkMessageLevel.ts";
-import BarkMessageErrorType from "../../src/model/enumeration/BarkMessageErrorType.ts";
-import BarkMessageSound from "../../src/model/enumeration/BarkMessageSound.ts";
-import BarkMessageError from "../../src/model/error/BarkMessageError.ts";
+import BarkMessageBuilder from "../bark_message_builder.ts";
+import BarkMessageLevel from "../enums/bark_message_level.ts";
+import BarkMessageErrorType from "../enums/bark_message_error_type.ts";
+import BarkMessageSound from "../enums/bark_message_sound.ts";
+import BarkMessageError from "../errors/bark_message_error.ts";
 
 Deno.test("Build message: icon property is a URL", () => {
   new BarkMessageBuilder().icon("https://i.am/a.url");

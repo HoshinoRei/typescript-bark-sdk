@@ -2,31 +2,46 @@
   "name": "@hoshinorei/bark-sdk",
   "version": "0.7.0",
   "tasks": {
-    "check": "deno check --unstable-sloppy-imports src/index.ts",
+    "check": "deno check --unstable-sloppy-imports mod.ts",
     "coverage": "deno coverage coverage --lcov --output=test-result/lcov.info",
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
     "lint": "deno lint",
     "prepublish": "deno task fmt:check && deno task lint && deno task check && deno task test && deno publish --dry-run --allow-dirty",
-    "test": "deno test --unstable-sloppy-imports --coverage=coverage --junit-path=test-result/junit.xml test/unit"
+    "test": "deno test --unstable-sloppy-imports --coverage=coverage --junit-path=test-result/junit.xml tests"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.14"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./mod.ts"
   },
   "fmt": {
     "include": [
-      "src/",
-      "test/",
+      "mod.ts",
+      "bark_client.ts",
+      "bark_message_builder.ts",
+      "enums/",
+      "errors/",
+      "types/",
+      "internal/",
+      "tests/",
       "README.md",
       "CLAUDE.md",
       "deno.json"
     ]
   },
   "lint": {
-    "include": ["src/", "test/"]
+    "include": [
+      "mod.ts",
+      "bark_client.ts",
+      "bark_message_builder.ts",
+      "enums/",
+      "errors/",
+      "types/",
+      "internal/",
+      "tests/"
+    ]
   },
   "compilerOptions": {
     "strict": true,
@@ -36,7 +51,13 @@
     "include": [
       "LICENSE",
       "README.md",
-      "src/**/*.ts"
+      "mod.ts",
+      "bark_client.ts",
+      "bark_message_builder.ts",
+      "enums/**/*.ts",
+      "errors/**/*.ts",
+      "types/**/*.ts",
+      "internal/**/*.ts"
     ],
     "exclude": [
       ".claude/**",
@@ -45,7 +66,7 @@
       "dist/**",
       "docs/**",
       "test-result/**",
-      "test/**"
+      "tests/**"
     ]
   }
 }

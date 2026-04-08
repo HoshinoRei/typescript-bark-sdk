@@ -1,14 +1,14 @@
-import BarkClientUrl from "../model/enumeration/BarkClientUrl.ts";
-import BarkEncryptedPushAlgorithm from "../model/enumeration/BarkEncryptedPushAlgorithm.ts";
-import BarkEncryptionErrorType from "../model/enumeration/BarkEncryptionErrorType.ts";
-import BarkResponseErrorType from "../model/enumeration/BarkResponseErrorType.ts";
-import BarkEncryptionError from "../model/error/BarkEncryptionError.ts";
-import BarkResponseError from "../model/error/BarkResponseError.ts";
-import EncryptionKeySizeError from "../model/error/EncryptionKeySizeError.ts";
-import EncryptionModeError from "../model/error/EncryptionModeError.ts";
-import type BarkMessage from "../model/request/BarkMessage.ts";
-import type BarkInfoResponse from "../model/response/BarkInfoResponse.ts";
-import type BarkResponse from "../model/response/BarkResponse.ts";
+import BarkClientUrl from "./internal/bark_client_url.ts";
+import BarkEncryptedPushAlgorithm from "./enums/bark_encrypted_push_algorithm.ts";
+import BarkEncryptionErrorType from "./enums/bark_encryption_error_type.ts";
+import BarkResponseErrorType from "./enums/bark_response_error_type.ts";
+import BarkEncryptionError from "./errors/bark_encryption_error.ts";
+import BarkResponseError from "./errors/bark_response_error.ts";
+import EncryptionKeySizeError from "./internal/errors/encryption_key_size_error.ts";
+import EncryptionModeError from "./internal/errors/encryption_mode_error.ts";
+import type BarkMessage from "./types/bark_message.ts";
+import type BarkInfoResponse from "./types/bark_info_response.ts";
+import type BarkResponse from "./types/bark_response.ts";
 
 /**
  * A class to communicate with Bark server
