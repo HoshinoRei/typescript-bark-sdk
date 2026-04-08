@@ -13,9 +13,7 @@
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.14"
   },
-  "exports": {
-    ".": "./mod.ts"
-  },
+  "exports": "./mod.ts",
   "fmt": {
     "include": [
       "mod.ts",
