@@ -55,7 +55,7 @@ jobs:
         run: deno task coverage
       - name: Upload coverage report
         if: success() || failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-lcov
           path: test-result/lcov.info
