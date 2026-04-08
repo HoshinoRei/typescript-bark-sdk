@@ -33,7 +33,10 @@ function withMockRegexExecSecondCallNull(targetSource: string): () => void {
   const originalExec = RegExp.prototype.exec;
   const callCount = new Map<RegExp, number>();
 
-  RegExp.prototype.exec = function (this: RegExp, value: string): RegExpExecArray | null {
+  RegExp.prototype.exec = function (
+    this: RegExp,
+    value: string,
+  ): RegExpExecArray | null {
     if (this.source === targetSource) {
       const count = (callCount.get(this) ?? 0) + 1;
       callCount.set(this, count);
@@ -636,7 +639,9 @@ Deno.test("Push: Device token regex exec null fallback", async () => {
 });
 
 Deno.test("Push: Request bind regex exec null fallback", async () => {
-  const restoreRegex = withMockRegexExecSecondCallNull("request bind failed: (.*)");
+  const restoreRegex = withMockRegexExecSecondCallNull(
+    "request bind failed: (.*)",
+  );
   const restoreFetch = withMockFetch(() =>
     new Response(
       JSON.stringify({
@@ -773,7 +778,10 @@ Deno.test("Push encrypted: Push failed maps to push failed error", async () => {
 });
 
 Deno.test("Push encrypted: Web Crypto unavailable maps to unknown error", async () => {
-  const originalDescriptor = Object.getOwnPropertyDescriptor(globalThis, "crypto");
+  const originalDescriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "crypto",
+  );
   Object.defineProperty(globalThis, "crypto", {
     configurable: true,
     value: undefined,
@@ -792,7 +800,10 @@ Deno.test("Push encrypted: Web Crypto unavailable maps to unknown error", async 
       BarkResponseError,
     );
     assertEquals(error.type, BarkResponseErrorType.UNKNOWN_ERROR);
-    assertEquals(error.message, "Web Crypto API is unavailable in current runtime");
+    assertEquals(
+      error.message,
+      "Web Crypto API is unavailable in current runtime",
+    );
   } finally {
     if (originalDescriptor) {
       Object.defineProperty(globalThis, "crypto", originalDescriptor);
