@@ -59,4 +59,10 @@ jobs:
         with:
           name: coverage-lcov
           path: test-result/lcov.info
+      - name: Report lcov
+        if: (success() || failure()) && github.event_name == 'pull_request'
+        uses: zgosalvez/github-actions-report-lcov@v7.0.8
+        with:
+          coverage-files: test-result/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
