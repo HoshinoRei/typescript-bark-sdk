@@ -59,6 +59,9 @@ jobs:
         with:
           name: coverage-lcov
           path: test-result/lcov.info
+      - name: Install lcov
+        if: (success() || failure()) && github.event_name == 'pull_request'
+        run: sudo apt-get update && sudo apt-get install -y lcov
       - name: Report lcov
         if: (success() || failure()) && github.event_name == 'pull_request'
         uses: zgosalvez/github-actions-report-lcov@v7.0.8
