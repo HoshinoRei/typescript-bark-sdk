@@ -38,6 +38,9 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Deno
         uses: denoland/setup-deno@v2
+      - name: Install lcov
+        if: github.event_name == 'pull_request'
+        run: sudo apt-get update && sudo apt-get install -y lcov
       - name: Run unit test
         env:
           CI: true
@@ -59,4 +62,10 @@ jobs:
         with:
           name: coverage-lcov
           path: test-result/lcov.info
+      - name: Report lcov
+        if: (success() || failure()) && github.event_name == 'pull_request'
+        uses: zgosalvez/github-actions-report-lcov@v7.0.8
+        with:
+          coverage-files: test-result/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
