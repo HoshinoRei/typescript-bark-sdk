@@ -59,20 +59,17 @@ jobs:
           path: test-result/deno-junit.xml
           output-to: step-summary
           reporter: jest-junit
-      - name: Generate lcov report
-        if: success() || failure()
-        run: deno task coverage
       - name: Upload coverage report
         if: success() || failure()
         uses: actions/upload-artifact@v7
         with:
           name: coverage-deno-lcov
-          path: test-result/deno-coverage/lcov.info
+          path: coverage/lcov.info
       - name: Report lcov
         if: (success() || failure()) && github.event_name == 'pull_request'
         uses: zgosalvez/github-actions-report-lcov@v7.0.10
         with:
-          coverage-files: test-result/deno-coverage/lcov.info
+          coverage-files: coverage/lcov.info
           title-prefix: Deno
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
