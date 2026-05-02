@@ -8,7 +8,7 @@ JSR.
 - Bark API v2 support (`push`, `pushEncrypted`, `health`, `ping`, `info`)
 - Typed request/response models
 - Typed error model for message/encryption/response failures
-- Works in Deno, Node.js (latest LTS), and browsers
+- Works in Deno, Node.js (latest LTS), and Bun
 
 ## Getting Started
 
