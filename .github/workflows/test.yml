@@ -73,6 +73,7 @@ jobs:
         uses: zgosalvez/github-actions-report-lcov@v7.0.10
         with:
           coverage-files: test-result/lcov.info
+          title-prefix: Deno
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   node-test:
@@ -102,7 +103,7 @@ jobs:
           name: Node Tests
           path: test-result/node-junit.xml
           output-to: step-summary
-          reporter: jest-junit
+          reporter: java-junit
       - name: Upload coverage report
         if: success() || failure()
         uses: actions/upload-artifact@v7
@@ -114,6 +115,7 @@ jobs:
         uses: zgosalvez/github-actions-report-lcov@v7.0.10
         with:
           coverage-files: test-result/node-coverage/lcov.info
+          title-prefix: Node
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   bun-test:
@@ -153,4 +155,5 @@ jobs:
         uses: zgosalvez/github-actions-report-lcov@v7.0.10
         with:
           coverage-files: test-result/bun-coverage/lcov.info
+          title-prefix: Bun
           github-token: ${{ secrets.GITHUB_TOKEN }}
