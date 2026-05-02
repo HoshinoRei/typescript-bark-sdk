@@ -6,6 +6,9 @@ on:
     paths:
       - .github/workflows/test.yml
       - deno.json
+      - package.json
+      - tsconfig.json
+      - .npmrc
       - mod.ts
       - bark_client.ts
       - bark_message_builder.ts
@@ -18,6 +21,9 @@ on:
     paths:
       - .github/workflows/test.yml
       - deno.json
+      - package.json
+      - tsconfig.json
+      - .npmrc
       - mod.ts
       - bark_client.ts
       - bark_message_builder.ts
@@ -67,5 +73,87 @@ jobs:
         uses: zgosalvez/github-actions-report-lcov@v7.0.10
         with:
           coverage-files: test-result/lcov.info
+          title-prefix: Deno
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+  node-test:
+    name: Node Test
+    permissions:
+      checks: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+      - name: Install lcov
+        if: github.event_name == 'pull_request'
+        run: sudo apt-get update && sudo apt-get install -y lcov
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit test
+        run: npm run test:node
+      - name: Publish Test Report
+        if: success() || failure()
+        uses: phoenix-actions/test-reporting@v15
+        with:
+          name: Node Tests
+          path: test-result/node-junit.xml
+          output-to: step-summary
+          reporter: java-junit
+      - name: Upload coverage report
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-node-lcov
+          path: test-result/node-coverage/lcov.info
+      - name: Report lcov
+        if: (success() || failure()) && github.event_name == 'pull_request'
+        uses: zgosalvez/github-actions-report-lcov@v7.0.10
+        with:
+          coverage-files: test-result/node-coverage/lcov.info
+          title-prefix: Node
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  bun-test:
+    name: Bun Test
+    permissions:
+      checks: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install lcov
+        if: github.event_name == 'pull_request'
+        run: sudo apt-get update && sudo apt-get install -y lcov
+      - name: Install dependencies
+        run: bun install
+      - name: Run unit test
+        run: bun run test:bun
+      - name: Publish Test Report
+        if: success() || failure()
+        uses: phoenix-actions/test-reporting@v15
+        with:
+          name: Bun Tests
+          path: test-result/bun-junit.xml
+          output-to: step-summary
+          reporter: jest-junit
+      - name: Upload coverage report
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-bun-lcov
+          path: test-result/bun-coverage/lcov.info
+      - name: Report lcov
+        if: (success() || failure()) && github.event_name == 'pull_request'
+        uses: zgosalvez/github-actions-report-lcov@v7.0.10
+        with:
+          coverage-files: test-result/bun-coverage/lcov.info
+          title-prefix: Bun
+          github-token: ${{ secrets.GITHUB_TOKEN }}

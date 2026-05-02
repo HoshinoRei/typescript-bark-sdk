@@ -8,7 +8,7 @@ JSR.
 - Bark API v2 support (`push`, `pushEncrypted`, `health`, `ping`, `info`)
 - Typed request/response models
 - Typed error model for message/encryption/response failures
-- Works in Deno, Node.js (20+), and browsers
+- Works in Deno, Node.js (latest LTS), and browsers
 
 ## Getting Started
 
@@ -85,8 +85,13 @@ await client.pushEncrypted(
 - Format check: `deno task fmt:check`
 - Lint: `deno task lint`
 - Type check: `deno task check`
-- Unit tests: `deno task test`
+- Unit tests (Deno, coverage + JUnit): `deno task test`
+- Unit tests (Node latest LTS): `npm run test:node`
+- Unit tests (Bun): `bun run test:bun`
 - Prepublish gate: `deno task prepublish`
+
+The test suite is written with `@cross/test` and is expected to pass in Deno,
+Node latest LTS, and Bun.
 
 `deno task prepublish` runs formatting/lint/type-check/tests and
 `deno publish --dry-run`.

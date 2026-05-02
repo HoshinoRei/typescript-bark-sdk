@@ -1,5 +1,4 @@
-/// <reference lib="deno.ns" />
-
+import { test } from "@cross/test";
 import { assertEquals, assertThrows } from "@std/assert";
 
 import BarkMessageBuilder from "../bark_message_builder.ts";
@@ -8,11 +7,11 @@ import BarkMessageErrorType from "../enums/bark_message_error_type.ts";
 import BarkMessageSound from "../enums/bark_message_sound.ts";
 import BarkMessageError from "../errors/bark_message_error.ts";
 
-Deno.test("Build message: icon property is a URL", () => {
+test("Build message: icon property is a URL", () => {
   new BarkMessageBuilder().icon("https://i.am/a.url");
 });
 
-Deno.test("Build message: icon property is not a URL", () => {
+test("Build message: icon property is not a URL", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().icon("I am not a URL"),
     BarkMessageError,
@@ -22,11 +21,11 @@ Deno.test("Build message: icon property is not a URL", () => {
   assertEquals(error.message, "The argument icon is not a URL");
 });
 
-Deno.test("Build message: url property is a URL", () => {
+test("Build message: url property is a URL", () => {
   new BarkMessageBuilder().url("https://i.am/a.url");
 });
 
-Deno.test("Build message: url property is not a URL", () => {
+test("Build message: url property is not a URL", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().url("I am not a URL"),
     BarkMessageError,
@@ -36,7 +35,7 @@ Deno.test("Build message: url property is not a URL", () => {
   assertEquals(error.message, "The argument url is not a URL");
 });
 
-Deno.test("Build message: icon property uses unsupported protocol", () => {
+test("Build message: icon property uses unsupported protocol", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().icon("ftp://i.am/a.url"),
     BarkMessageError,
@@ -46,7 +45,7 @@ Deno.test("Build message: icon property uses unsupported protocol", () => {
   assertEquals(error.message, "The argument icon is not a URL");
 });
 
-Deno.test("Build message: url property uses unsupported protocol", () => {
+test("Build message: url property uses unsupported protocol", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().url("mailto:test@example.com"),
     BarkMessageError,
@@ -56,7 +55,7 @@ Deno.test("Build message: url property uses unsupported protocol", () => {
   assertEquals(error.message, "The argument url is not a URL");
 });
 
-Deno.test("Build message: fluent builder sets all fields", () => {
+test("Build message: fluent builder sets all fields", () => {
   const message = new BarkMessageBuilder()
     .archive()
     .badge(1)
@@ -88,7 +87,7 @@ Deno.test("Build message: fluent builder sets all fields", () => {
   });
 });
 
-Deno.test("Build message: built object reflects later mutations", () => {
+test("Build message: built object reflects later mutations", () => {
   const builder = new BarkMessageBuilder().body("A");
   const built = builder.build();
 

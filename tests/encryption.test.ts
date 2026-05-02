@@ -1,5 +1,4 @@
-/// <reference lib="deno.ns" />
-
+import { test } from "@cross/test";
 import { assertEquals, assertRejects, assertThrows } from "@std/assert";
 
 import BarkClient from "../bark_client.ts";
@@ -21,7 +20,7 @@ class TestableBarkClient extends BarkClient {
       algorithm,
       key,
       iv,
-      globalThis.crypto,
+      globalThis.crypto!,
     );
   }
 
@@ -37,7 +36,7 @@ class TestableBarkClient extends BarkClient {
   }
 }
 
-Deno.test("Encryption: Encrypt message with AES-128-CBC", async () => {
+test("Encryption: Encrypt message with AES-128-CBC", async () => {
   const client = new TestableBarkClient();
 
   const ciphertext = await client.encrypt(
@@ -56,7 +55,7 @@ Deno.test("Encryption: Encrypt message with AES-128-CBC", async () => {
   );
 });
 
-Deno.test("Encryption: Encrypt message with AES-128-ECB", async () => {
+test("Encryption: Encrypt message with AES-128-ECB", async () => {
   const client = new TestableBarkClient();
 
   const ciphertext = await client.encrypt(
@@ -75,7 +74,7 @@ Deno.test("Encryption: Encrypt message with AES-128-ECB", async () => {
   );
 });
 
-Deno.test("Encryption: PKCS#7 padding adds a full block for aligned input", () => {
+test("Encryption: PKCS#7 padding adds a full block for aligned input", () => {
   const client = new TestableBarkClient();
   const data = new TextEncoder().encode("1234567890abcdef");
 
@@ -85,7 +84,7 @@ Deno.test("Encryption: PKCS#7 padding adds a full block for aligned input", () =
   assertEquals(Array.from(padded.slice(16)), new Array(16).fill(16));
 });
 
-Deno.test("Encryption: PKCS#7 padding fills remaining bytes", () => {
+test("Encryption: PKCS#7 padding fills remaining bytes", () => {
   const client = new TestableBarkClient();
   const data = new TextEncoder().encode("12345");
 
@@ -95,7 +94,7 @@ Deno.test("Encryption: PKCS#7 padding fills remaining bytes", () => {
   assertEquals(Array.from(padded.slice(5)), new Array(11).fill(11));
 });
 
-Deno.test("Encryption: Parse mode and key size from algorithm", () => {
+test("Encryption: Parse mode and key size from algorithm", () => {
   const client = new TestableBarkClient();
 
   assertEquals(client.modeAndKeySize(BarkEncryptedPushAlgorithm.AES_128_CBC), {
@@ -112,7 +111,7 @@ Deno.test("Encryption: Parse mode and key size from algorithm", () => {
   });
 });
 
-Deno.test("Encryption: Invalid key size in algorithm throws", () => {
+test("Encryption: Invalid key size in algorithm throws", () => {
   const client = new TestableBarkClient();
 
   assertThrows(
@@ -125,7 +124,7 @@ Deno.test("Encryption: Invalid key size in algorithm throws", () => {
   );
 });
 
-Deno.test("Encryption: Invalid mode in algorithm throws", () => {
+test("Encryption: Invalid mode in algorithm throws", () => {
   const client = new TestableBarkClient();
 
   assertThrows(
@@ -138,7 +137,7 @@ Deno.test("Encryption: Invalid mode in algorithm throws", () => {
   );
 });
 
-Deno.test("Encryption: Encrypt payload key length mismatch throws", async () => {
+test("Encryption: Encrypt payload key length mismatch throws", async () => {
   const client = new TestableBarkClient();
 
   await assertRejects(
