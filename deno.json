@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "tasks": {
     "check": "deno check --unstable-sloppy-imports mod.ts",
-    "coverage": "deno coverage coverage --lcov --output=test-result/lcov.info",
+    "coverage": "mkdir -p test-result/deno-coverage && deno coverage coverage --lcov --output=test-result/deno-coverage/lcov.info",
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
     "lint": "deno lint",
