@@ -10,6 +10,8 @@ code in this repository.
 - Lint: `deno task lint`
 - Type check public entry: `deno task check`
 - Run tests with coverage + JUnit output: `deno task test`
+- Run tests in Node latest LTS: `npm run test:node`
+- Run tests in Bun: `bun run test:bun`
 - Generate lcov report: `deno task coverage`
 - Publish package: `deno publish`
 
@@ -40,7 +42,9 @@ This package is a TypeScript SDK for Bark API v2, built as a Deno-first library.
 ## Build and test structure
 
 - Deno tasks are defined in `deno.json`.
-- Unit tests in `tests/*_test.ts` use Deno test APIs and assert Bark behavior
-  and typed error mapping.
+- Cross-runtime package manager and test runner settings live in `package.json`,
+  `tsconfig.json`, and `.npmrc`.
+- Unit tests in `tests/*.test.ts` use `@cross/test` and assert Bark behavior and
+  typed error mapping in Deno, Node, and Bun.
 - Coverage and JUnit outputs are generated via Deno test flags for CI
   consumption.

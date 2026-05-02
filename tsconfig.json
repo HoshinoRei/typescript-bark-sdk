@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "types": ["node"]
+  },
+  "include": [
+    "mod.ts",
+    "bark_client.ts",
+    "bark_message_builder.ts",
+    "enums/**/*.ts",
+    "errors/**/*.ts",
+    "internal/**/*.ts",
+    "types/**/*.ts",
+    "tests/**/*.ts"
+  ]
+}

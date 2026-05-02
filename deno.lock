@@ -1,12 +1,24 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@cross/runtime@1.0": "1.0.0",
+    "jsr:@cross/test@*": "0.0.14",
+    "jsr:@cross/test@^0.0.14": "0.0.14",
     "jsr:@std/assert@^1.0.14": "1.0.14",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "npm:esbuild@0.25.12": "0.25.12",
     "npm:tsup@8.5.0": "8.5.0"
   },
   "jsr": {
+    "@cross/runtime@1.0.0": {
+      "integrity": "dddecdf99182df13d50279d1e473f715e83d41961c5c22edd7bb0c4c3cf8a76a"
+    },
+    "@cross/test@0.0.14": {
+      "integrity": "3af2cf23e39f97156d21da4b21373407735343493e333f33eaeceedce511a7f9",
+      "dependencies": [
+        "jsr:@cross/runtime"
+      ]
+    },
     "@std/assert@1.0.14": {
       "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
       "dependencies": [
@@ -703,7 +715,15 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@cross/test@^0.0.14",
       "jsr:@std/assert@^1.0.14"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@jsr/cross__test@^0.0.14",
+        "npm:@jsr/std__assert@^1.0.19",
+        "npm:tsx@^4.20.6"
+      ]
+    }
   }
 }

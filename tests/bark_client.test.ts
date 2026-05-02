@@ -1,10 +1,8 @@
-/// <reference lib="deno.ns" />
-
+import { test } from "@cross/test";
 import { assertEquals, assertRejects } from "@std/assert";
 
 import BarkClient from "../bark_client.ts";
 import BarkMessageBuilder from "../bark_message_builder.ts";
-import BarkClientUrl from "../internal/bark_client_url.ts";
 import BarkEncryptedPushAlgorithm from "../enums/bark_encrypted_push_algorithm.ts";
 import BarkEncryptionErrorType from "../enums/bark_encryption_error_type.ts";
 import BarkMessageLevel from "../enums/bark_message_level.ts";
@@ -12,50 +10,17 @@ import BarkMessageSound from "../enums/bark_message_sound.ts";
 import BarkResponseErrorType from "../enums/bark_response_error_type.ts";
 import BarkEncryptionError from "../errors/bark_encryption_error.ts";
 import BarkResponseError from "../errors/bark_response_error.ts";
+import BarkClientUrl from "../internal/bark_client_url.ts";
 import type BarkMessage from "../types/bark_message.ts";
-
-function withMockFetch(
-  handler: (
-    input: string | URL | Request,
-    init?: RequestInit,
-  ) => Promise<Response> | Response,
-): () => void {
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch =
-    ((input: string | URL | Request, init?: RequestInit) =>
-      Promise.resolve(handler(input, init))) as typeof fetch;
-  return () => {
-    globalThis.fetch = originalFetch;
-  };
-}
-
-function withMockRegexExecSecondCallNull(targetSource: string): () => void {
-  const originalExec = RegExp.prototype.exec;
-  const callCount = new Map<RegExp, number>();
-
-  RegExp.prototype.exec = function (
-    this: RegExp,
-    value: string,
-  ): RegExpExecArray | null {
-    if (this.source === targetSource) {
-      const count = (callCount.get(this) ?? 0) + 1;
-      callCount.set(this, count);
-      if (count === 2) {
-        return null;
-      }
-    }
-
-    return originalExec.call(this, value);
-  };
-
-  return () => {
-    RegExp.prototype.exec = originalExec;
-  };
-}
+import {
+  withGlobalProperty,
+  withMockFetch,
+  withMockRegexExecSecondCallNull,
+} from "./test_helpers.ts";
 
 const client = new BarkClient();
 
-Deno.test("Health: Server is healthy", async () => {
+test("Health: Server is healthy", async () => {
   const restore = withMockFetch(() => new Response("ok", { status: 200 }));
 
   try {
@@ -65,7 +30,7 @@ Deno.test("Health: Server is healthy", async () => {
   }
 });
 
-Deno.test("Health: Server is unhealthy", async () => {
+test("Health: Server is unhealthy", async () => {
   const restore = withMockFetch(() => {
     throw new TypeError("network error");
   });
@@ -79,7 +44,7 @@ Deno.test("Health: Server is unhealthy", async () => {
   }
 });
 
-Deno.test("Info: Server respond info", async () => {
+test("Info: Server respond info", async () => {
   const restore = withMockFetch(
     () =>
       new Response(
@@ -111,7 +76,7 @@ Deno.test("Info: Server respond info", async () => {
   }
 });
 
-Deno.test("Info: Server don't respond info", async () => {
+test("Info: Server don't respond info", async () => {
   const restore = withMockFetch(() => {
     throw new TypeError("network error");
   });
@@ -125,7 +90,7 @@ Deno.test("Info: Server don't respond info", async () => {
   }
 });
 
-Deno.test("Info: Server respond info without build", async () => {
+test("Info: Server respond info without build", async () => {
   const restore = withMockFetch(
     () =>
       new Response(
@@ -156,7 +121,7 @@ Deno.test("Info: Server respond info without build", async () => {
   }
 });
 
-Deno.test("Ping: Server is running", async () => {
+test("Ping: Server is running", async () => {
   const restore = withMockFetch(
     () =>
       new Response(
@@ -179,7 +144,7 @@ Deno.test("Ping: Server is running", async () => {
   }
 });
 
-Deno.test("Ping: Server is not running", async () => {
+test("Ping: Server is not running", async () => {
   const restore = withMockFetch(() => {
     throw new TypeError("network error");
   });
@@ -233,7 +198,7 @@ const pushMessages: BarkMessage[] = [
 ];
 
 for (const [index, message] of pushMessages.entries()) {
-  Deno.test(`Push #${index} normal: Device key is empty`, async () => {
+  test(`Push #${index} normal: Device key is empty`, async () => {
     const barkMessage = structuredClone(message);
     delete barkMessage.device_key;
 
@@ -269,7 +234,7 @@ for (const [index, message] of pushMessages.entries()) {
     }
   });
 
-  Deno.test(`Push #${index} normal: Device key is not registered`, async () => {
+  test(`Push #${index} normal: Device key is not registered`, async () => {
     const barkMessage = structuredClone(message);
     barkMessage.device_key = "I am not a device key";
 
@@ -306,7 +271,7 @@ for (const [index, message] of pushMessages.entries()) {
     }
   });
 
-  Deno.test(`Push #${index} normal: Request bind failed`, async () => {
+  test(`Push #${index} normal: Request bind failed`, async () => {
     const barkMessage = structuredClone(message);
 
     const restore = withMockFetch(() =>
@@ -314,7 +279,7 @@ for (const [index, message] of pushMessages.entries()) {
         JSON.stringify({
           code: 400,
           message:
-            "request bind failed: invalid character '\\\"' after object key:value pair",
+            `request bind failed: invalid character '\"' after object key:value pair`,
           timestamp: 0,
         }),
         {
@@ -332,14 +297,14 @@ for (const [index, message] of pushMessages.entries()) {
       assertEquals(error.type, BarkResponseErrorType.REQUEST_BIND_FAILED);
       assertEquals(
         error.message,
-        "Request bind failed: invalid character '\\\"' after object key:value pair",
+        `Request bind failed: invalid character '\"' after object key:value pair`,
       );
     } finally {
       restore();
     }
   });
 
-  Deno.test(`Push #${index} normal: Push failed`, async () => {
+  test(`Push #${index} normal: Push failed`, async () => {
     const barkMessage = structuredClone(message);
 
     const restore = withMockFetch(() =>
@@ -368,7 +333,7 @@ for (const [index, message] of pushMessages.entries()) {
     }
   });
 
-  Deno.test(`Push #${index} normal: Succeed`, async () => {
+  test(`Push #${index} normal: Succeed`, async () => {
     const barkMessage = structuredClone(message);
 
     const restore = withMockFetch((input) => {
@@ -393,7 +358,7 @@ for (const [index, message] of pushMessages.entries()) {
     }
   });
 
-  Deno.test(`Push #${index} encrypted: The length of iv is not 16`, async () => {
+  test(`Push #${index} encrypted: The length of iv is not 16`, async () => {
     const barkMessage = structuredClone(message);
     delete barkMessage.device_key;
 
@@ -423,7 +388,7 @@ for (const [index, message] of pushMessages.entries()) {
       { algorithm: BarkEncryptedPushAlgorithm.AES_256_ECB, length: 32 },
     ]
   ) {
-    Deno.test(
+    test(
       `Push #${index} encrypted: key length is not ${length} when algorithm is ${algorithm}`,
       async () => {
         const barkMessage = structuredClone(message);
@@ -448,21 +413,19 @@ for (const [index, message] of pushMessages.entries()) {
   }
 }
 
-Deno.test("Health: Fetch API is unavailable", async () => {
-  const globalObject = globalThis as unknown as { fetch?: typeof fetch };
-  const originalFetch = globalObject.fetch;
-  globalObject.fetch = undefined;
+test("Health: Fetch API is unavailable", async () => {
+  const restore = withGlobalProperty("fetch", undefined);
 
   try {
     const error = await assertRejects(() => client.health(), BarkResponseError);
     assertEquals(error.type, BarkResponseErrorType.UNKNOWN_ERROR);
     assertEquals(error.message, "Unknown error");
   } finally {
-    globalObject.fetch = originalFetch;
+    restore();
   }
 });
 
-Deno.test("Info: Non-TypeError maps to unknown error", async () => {
+test("Info: Non-TypeError maps to unknown error", async () => {
   const restore = withMockFetch(() => {
     throw new Error("unexpected");
   });
@@ -476,7 +439,7 @@ Deno.test("Info: Non-TypeError maps to unknown error", async () => {
   }
 });
 
-Deno.test("Info: Error with status maps to server has not response", async () => {
+test("Info: Error with status maps to server has not response", async () => {
   const restore = withMockFetch(() => {
     const error = new Error("http");
     (error as Error & { status: number }).status = 503;
@@ -492,7 +455,7 @@ Deno.test("Info: Error with status maps to server has not response", async () =>
   }
 });
 
-Deno.test("Info: Non-Error throw maps to unknown error", async () => {
+test("Info: Non-Error throw maps to unknown error", async () => {
   const restore = withMockFetch(() => {
     throw "boom";
   });
@@ -506,7 +469,7 @@ Deno.test("Info: Non-Error throw maps to unknown error", async () => {
   }
 });
 
-Deno.test("Push: Non-JSON error response maps to unknown error", async () => {
+test("Push: Non-JSON error response maps to unknown error", async () => {
   const restore = withMockFetch(() =>
     new Response("I am not JSON", {
       headers: { "Content-Type": "text/plain" },
@@ -526,7 +489,7 @@ Deno.test("Push: Non-JSON error response maps to unknown error", async () => {
   }
 });
 
-Deno.test("Push: Unknown 400 message maps to unknown error", async () => {
+test("Push: Unknown 400 message maps to unknown error", async () => {
   const restore = withMockFetch(() =>
     new Response(
       JSON.stringify({
@@ -553,7 +516,7 @@ Deno.test("Push: Unknown 400 message maps to unknown error", async () => {
   }
 });
 
-Deno.test("Push: Non-Error throw maps to unknown error", async () => {
+test("Push: Non-Error throw maps to unknown error", async () => {
   const restore = withMockFetch(() => {
     throw "boom";
   });
@@ -570,7 +533,7 @@ Deno.test("Push: Non-Error throw maps to unknown error", async () => {
   }
 });
 
-Deno.test("Push: Error without status maps to unknown error", async () => {
+test("Push: Error without status maps to unknown error", async () => {
   const restore = withMockFetch(() => {
     throw new Error("network error");
   });
@@ -587,7 +550,7 @@ Deno.test("Push: Error without status maps to unknown error", async () => {
   }
 });
 
-Deno.test("Push: Error with status and no data maps to unknown error", async () => {
+test("Push: Error with status and no data maps to unknown error", async () => {
   const restore = withMockFetch(() => {
     const error = new Error("http");
     (error as Error & { status: number }).status = 500;
@@ -606,7 +569,7 @@ Deno.test("Push: Error with status and no data maps to unknown error", async () 
   }
 });
 
-Deno.test("Push: Device token regex exec null fallback", async () => {
+test("Push: Device token regex exec null fallback", async () => {
   const restoreRegex = withMockRegexExecSecondCallNull(
     "failed to get device token: (.*)",
   );
@@ -638,7 +601,7 @@ Deno.test("Push: Device token regex exec null fallback", async () => {
   }
 });
 
-Deno.test("Push: Request bind regex exec null fallback", async () => {
+test("Push: Request bind regex exec null fallback", async () => {
   const restoreRegex = withMockRegexExecSecondCallNull(
     "request bind failed: (.*)",
   );
@@ -670,7 +633,7 @@ Deno.test("Push: Request bind regex exec null fallback", async () => {
   }
 });
 
-Deno.test("Push: Push failed regex exec null fallback", async () => {
+test("Push: Push failed regex exec null fallback", async () => {
   const restoreRegex = withMockRegexExecSecondCallNull("push failed: (.*)");
   const restoreFetch = withMockFetch(() =>
     new Response(
@@ -699,7 +662,7 @@ Deno.test("Push: Push failed regex exec null fallback", async () => {
   }
 });
 
-Deno.test("Push encrypted: Succeed with ciphertext payload", async () => {
+test("Push encrypted: Succeed with ciphertext payload", async () => {
   const restore = withMockFetch((input, init) => {
     assertEquals(String(input), "https://api.day.app/device-key");
     assertEquals(init?.method, "POST");
@@ -741,7 +704,7 @@ Deno.test("Push encrypted: Succeed with ciphertext payload", async () => {
   }
 });
 
-Deno.test("Push encrypted: Push failed maps to push failed error", async () => {
+test("Push encrypted: Push failed maps to push failed error", async () => {
   const restore = withMockFetch(() =>
     new Response(
       JSON.stringify({
@@ -777,15 +740,8 @@ Deno.test("Push encrypted: Push failed maps to push failed error", async () => {
   }
 });
 
-Deno.test("Push encrypted: Web Crypto unavailable maps to unknown error", async () => {
-  const originalDescriptor = Object.getOwnPropertyDescriptor(
-    globalThis,
-    "crypto",
-  );
-  Object.defineProperty(globalThis, "crypto", {
-    configurable: true,
-    value: undefined,
-  });
+test("Push encrypted: Web Crypto unavailable maps to unknown error", async () => {
+  const restore = withGlobalProperty("crypto", undefined);
 
   try {
     const error = await assertRejects(
@@ -805,13 +761,11 @@ Deno.test("Push encrypted: Web Crypto unavailable maps to unknown error", async 
       "Web Crypto API is unavailable in current runtime",
     );
   } finally {
-    if (originalDescriptor) {
-      Object.defineProperty(globalThis, "crypto", originalDescriptor);
-    }
+    restore();
   }
 });
 
-Deno.test("Push encrypted: Succeed with AES-192-CBC", async () => {
+test("Push encrypted: Succeed with AES-192-CBC", async () => {
   const restore = withMockFetch(() =>
     new Response(
       JSON.stringify({
@@ -839,7 +793,7 @@ Deno.test("Push encrypted: Succeed with AES-192-CBC", async () => {
   }
 });
 
-Deno.test("Push encrypted: Succeed with AES-256-CBC", async () => {
+test("Push encrypted: Succeed with AES-256-CBC", async () => {
   const restore = withMockFetch(() =>
     new Response(
       JSON.stringify({
@@ -867,7 +821,7 @@ Deno.test("Push encrypted: Succeed with AES-256-CBC", async () => {
   }
 });
 
-Deno.test("Health: Build URL is stable with trailing slash", async () => {
+test("Health: Build URL is stable with trailing slash", async () => {
   const requestedUrls: string[] = [];
   const restore = withMockFetch((input) => {
     requestedUrls.push(String(input));
