@@ -56,7 +56,7 @@ jobs:
         uses: phoenix-actions/test-reporting@v15
         with:
           name: Deno Tests
-          path: test-result/junit.xml
+          path: test-result/deno-junit.xml
           output-to: step-summary
           reporter: jest-junit
       - name: Generate lcov report
