@@ -49,7 +49,6 @@ await client.pushEncrypted(
 > `key`/`iv` must match the selected algorithm requirements.
 
 - [Supported algorithms](https://jsr.io/@hoshinorei/bark-sdk/doc/~/BarkEncryptedPushAlgorithm#members)
-- [More examples and usage](https://github.com/HoshinoRei/typescript-bark-sdk/wiki/Exports)
 
 ## Public API
 
