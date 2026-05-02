@@ -1,0 +1,52 @@
+{
+  "name": "typescript-bark-sdk",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
+    "ghcr.io/devcontainer-community/devcontainer-features/jq:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:2.0.0": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers-extra/features/deno:1": {
+      "version": "2.7.11"
+    },
+    "ghcr.io/devcontainers-extra/features/bun:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers-extra/features/apt-packages:1": {
+      "packages": "lcov"
+    }
+  },
+  "initializeCommand": "bash .devcontainer/init.sh",
+  "mounts": [
+    "source=claude-code-config,target=/home/vscode/.claude,type=volume"
+  ],
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Anthropic.claude-code",
+        "denoland.vscode-deno",
+        "github.vscode-github-actions",
+        "oven.bun-vscode",
+        "WakaTime.vscode-wakatime"
+      ],
+      "settings": {
+        "deno.enable": true,
+        "deno.lint": true,
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "ANTHROPIC_BASE_URL": "${localEnv:ANTHROPIC_BASE_URL}",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "GH_TOKEN": "${localEnv:GH_TOKEN}",
+    "WAKATIME_API_KEY": "${localEnv:WAKATIME_API_KEY}",
+    "WAKATIME_API_URL": "${localEnv:WAKATIME_API_URL}"
+  }
+}
