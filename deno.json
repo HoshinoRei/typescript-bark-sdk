@@ -8,7 +8,7 @@
     "fmt:check": "deno fmt --check",
     "lint": "deno lint",
     "prepublish": "deno task fmt:check && deno task lint && deno task check && deno task test && deno publish --dry-run --allow-dirty",
-    "test": "deno test --unstable-sloppy-imports --coverage=coverage --junit-path=test-result/junit.xml tests"
+    "test": "deno test --unstable-sloppy-imports --coverage=coverage --junit-path=test-result/deno-junit.xml tests"
   },
   "imports": {
     "@cross/test": "jsr:@cross/test@^0.0.14",
