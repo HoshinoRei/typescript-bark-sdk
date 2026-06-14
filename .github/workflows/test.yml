@@ -67,7 +67,7 @@ jobs:
           path: coverage/lcov.info
       - name: Report lcov
         if: (success() || failure()) && github.event_name == 'pull_request'
-        uses: zgosalvez/github-actions-report-lcov@v7.0.10
+        uses: zgosalvez/github-actions-report-lcov@v7.0.12
         with:
           coverage-files: coverage/lcov.info
           title-prefix: Deno
@@ -109,7 +109,7 @@ jobs:
           path: test-result/node-coverage/lcov.info
       - name: Report lcov
         if: (success() || failure()) && github.event_name == 'pull_request'
-        uses: zgosalvez/github-actions-report-lcov@v7.0.10
+        uses: zgosalvez/github-actions-report-lcov@v7.0.12
         with:
           coverage-files: test-result/node-coverage/lcov.info
           title-prefix: Node
@@ -149,7 +149,7 @@ jobs:
           path: test-result/bun-coverage/lcov.info
       - name: Report lcov
         if: (success() || failure()) && github.event_name == 'pull_request'
-        uses: zgosalvez/github-actions-report-lcov@v7.0.10
+        uses: zgosalvez/github-actions-report-lcov@v7.0.12
         with:
           coverage-files: test-result/bun-coverage/lcov.info
           title-prefix: Bun
