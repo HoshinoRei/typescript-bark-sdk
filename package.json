@@ -9,6 +9,6 @@
   "devDependencies": {
     "@cross/test": "npm:@jsr/cross__test@^0.0.14",
     "@std/assert": "npm:@jsr/std__assert@^1.0.19",
-    "tsx": "^4.22.4"
+    "tsx": "^4.23.0"
   }
 }
