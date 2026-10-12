@@ -5,14 +5,8 @@
     "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
     "ghcr.io/devcontainer-community/devcontainer-features/jq:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/node:2.0.0": {
-      "version": "lts"
-    },
-    "ghcr.io/devcontainers-extra/features/deno:1": {
-      "version": "2.7.14"
-    },
     "ghcr.io/devcontainers-extra/features/bun:1": {
-      "version": "latest"
+      "version": "1.4.3"
     },
     "ghcr.io/devcontainers-extra/features/apt-packages:1": {
       "packages": "lcov"
@@ -28,14 +22,11 @@
     "vscode": {
       "extensions": [
         "Anthropic.claude-code",
-        "denoland.vscode-deno",
         "github.vscode-github-actions",
         "oven.bun-vscode",
         "WakaTime.vscode-wakatime"
       ],
       "settings": {
-        "deno.enable": true,
-        "deno.lint": true,
         "editor.formatOnSave": true
       }
     }

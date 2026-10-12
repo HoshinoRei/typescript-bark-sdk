@@ -1,14 +1,14 @@
-import BarkClientUrl from "./internal/bark_client_url.ts";
-import BarkEncryptedPushAlgorithm from "./enums/bark_encrypted_push_algorithm.ts";
-import BarkEncryptionErrorType from "./enums/bark_encryption_error_type.ts";
-import BarkResponseErrorType from "./enums/bark_response_error_type.ts";
-import BarkEncryptionError from "./errors/bark_encryption_error.ts";
-import BarkResponseError from "./errors/bark_response_error.ts";
-import EncryptionKeySizeError from "./internal/errors/encryption_key_size_error.ts";
-import EncryptionModeError from "./internal/errors/encryption_mode_error.ts";
-import type BarkMessage from "./types/bark_message.ts";
-import type BarkInfoResponse from "./types/bark_info_response.ts";
-import type BarkResponse from "./types/bark_response.ts";
+import BarkEncryptedPushAlgorithm from "./enums/bark_encrypted_push_algorithm.ts"
+import BarkEncryptionErrorType from "./enums/bark_encryption_error_type.ts"
+import BarkResponseErrorType from "./enums/bark_response_error_type.ts"
+import BarkEncryptionError from "./errors/bark_encryption_error.ts"
+import BarkResponseError from "./errors/bark_response_error.ts"
+import BarkClientUrl from "./internal/bark_client_url.ts"
+import EncryptionKeySizeError from "./internal/errors/encryption_key_size_error.ts"
+import EncryptionModeError from "./internal/errors/encryption_mode_error.ts"
+import type BarkInfoResponse from "./types/bark_info_response.ts"
+import type BarkMessage from "./types/bark_message.ts"
+import type BarkResponse from "./types/bark_response.ts"
 
 /**
  * A class to communicate with Bark server
@@ -17,7 +17,7 @@ export default class BarkClient {
   /**
    * Base address of the target Bark server.
    */
-  protected readonly serverAddress: string;
+  protected readonly serverAddress: string
 
   /**
    * Create a Bark client instance.
@@ -25,7 +25,7 @@ export default class BarkClient {
    * @param serverAddress Bark server base URL.
    */
   constructor(serverAddress: string = "https://api.day.app") {
-    this.serverAddress = serverAddress;
+    this.serverAddress = serverAddress
   }
 
   /**
@@ -36,9 +36,9 @@ export default class BarkClient {
    */
   async health(): Promise<void> {
     try {
-      await this.request(BarkClientUrl.HEALTHZ);
+      await this.request(BarkClientUrl.HEALTHZ)
     } catch (error) {
-      throw this.miscellaneousFunctionErrorProducer(error);
+      throw this.miscellaneousFunctionErrorProducer(error)
     }
   }
 
@@ -51,24 +51,25 @@ export default class BarkClient {
   async info(): Promise<BarkInfoResponse> {
     try {
       const data = await this.requestJson<{
-        arch?: string;
-        build?: string;
-        commit?: string;
-        devices?: number;
-        version?: string;
-      }>(BarkClientUrl.INFO);
+        arch?: string
+        build?: string
+        commit?: string
+        devices?: number
+        version?: string
+      }>(BarkClientUrl.INFO)
 
       return {
         arch: data.arch,
-        build: data.build !== undefined
-          ? new Date(Date.parse(data.build))
-          : undefined,
+        build:
+          data.build !== undefined
+            ? new Date(Date.parse(data.build))
+            : undefined,
         commit: data.commit,
         devices: data.devices,
         version: data.version,
-      };
+      }
     } catch (error) {
-      throw this.miscellaneousFunctionErrorProducer(error);
+      throw this.miscellaneousFunctionErrorProducer(error)
     }
   }
 
@@ -80,9 +81,9 @@ export default class BarkClient {
    */
   async ping(): Promise<void> {
     try {
-      await this.requestJson<BarkResponse>(BarkClientUrl.PING);
+      await this.requestJson<BarkResponse>(BarkClientUrl.PING)
     } catch (e) {
-      throw this.miscellaneousFunctionErrorProducer(e);
+      throw this.miscellaneousFunctionErrorProducer(e)
     }
   }
 
@@ -101,9 +102,9 @@ export default class BarkClient {
           "Content-Type": "application/json",
         },
         method: "POST",
-      });
+      })
     } catch (e) {
-      throw this.pushErrorProducer(e);
+      throw this.pushErrorProducer(e)
     }
   }
 
@@ -128,15 +129,15 @@ export default class BarkClient {
     key: string,
     iv: string,
   ): Promise<void> {
-    this.checkKey(algorithm, key);
-    this.checkIv(iv);
+    this.checkKey(algorithm, key)
+    this.checkIv(iv)
 
-    const effectiveCrypto = globalThis.crypto;
+    const effectiveCrypto = globalThis.crypto
     if (effectiveCrypto?.subtle == null) {
       throw new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Web Crypto API is unavailable in current runtime",
-      );
+      )
     }
     const ciphertext = await this.encryptPayload(
       message,
@@ -144,7 +145,7 @@ export default class BarkClient {
       key,
       iv,
       effectiveCrypto,
-    );
+    )
 
     try {
       await this.requestJson<BarkResponse>(deviceKey, {
@@ -155,9 +156,9 @@ export default class BarkClient {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "POST",
-      });
+      })
     } catch (e) {
-      throw this.pushErrorProducer(e);
+      throw this.pushErrorProducer(e)
     }
   }
 
@@ -170,44 +171,44 @@ export default class BarkClient {
   protected cryptoJsModeAndKeySizeProducer(
     algorithm: BarkEncryptedPushAlgorithm,
   ): {
-    mode: "cbc" | "ecb";
-    keySize: number;
+    mode: "cbc" | "ecb"
+    keySize: number
   } {
-    let keySize: number;
-    let mode: "cbc" | "ecb";
+    let keySize: number
+    let mode: "cbc" | "ecb"
 
-    const array = algorithm.split("-", 3);
+    const array = algorithm.split("-", 3)
 
     switch (array[1]) {
       case "128":
-        keySize = 128;
-        break;
+        keySize = 128
+        break
       case "192":
-        keySize = 192;
-        break;
+        keySize = 192
+        break
       case "256":
-        keySize = 256;
-        break;
+        keySize = 256
+        break
       default:
         throw new EncryptionKeySizeError(
           "The algorithm has not a valid key size",
-        );
+        )
     }
 
     switch (array[2]) {
       case "cbc":
-        mode = "cbc";
-        break;
+        mode = "cbc"
+        break
       case "ecb":
-        mode = "ecb";
-        break;
+        mode = "ecb"
+        break
       default:
         throw new EncryptionModeError(
           "The algorithm has not a valid CryptoJS mode",
-        );
+        )
     }
 
-    return { mode, keySize };
+    return { mode, keySize }
   }
 
   /**
@@ -228,18 +229,18 @@ export default class BarkClient {
         BarkResponseErrorType.SERVER_HAS_NOT_RESPONSE,
         "Server has not response",
         error,
-      );
+      )
     } else if (error instanceof Error) {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
         error,
-      );
+      )
     } else {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
-      );
+      )
     }
   }
 
@@ -257,9 +258,9 @@ export default class BarkClient {
           throw new BarkEncryptionError(
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             "The length of key is not 16",
-          );
+          )
         }
-        break;
+        break
       }
       case BarkEncryptedPushAlgorithm.AES_192_CBC:
       case BarkEncryptedPushAlgorithm.AES_192_ECB: {
@@ -267,9 +268,9 @@ export default class BarkClient {
           throw new BarkEncryptionError(
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             "The length of key is not 24",
-          );
+          )
         }
-        break;
+        break
       }
       case BarkEncryptedPushAlgorithm.AES_256_CBC:
       case BarkEncryptedPushAlgorithm.AES_256_ECB: {
@@ -277,9 +278,9 @@ export default class BarkClient {
           throw new BarkEncryptionError(
             BarkEncryptionErrorType.KEY_IS_NOT_CORRECT,
             "The length of key is not 32",
-          );
+          )
         }
-        break;
+        break
       }
     }
   }
@@ -294,7 +295,7 @@ export default class BarkClient {
       throw new BarkEncryptionError(
         BarkEncryptionErrorType.IV_IS_NOT_CORRECT,
         "The length of iv is not 16",
-      );
+      )
     }
   }
 
@@ -309,50 +310,49 @@ export default class BarkClient {
       "status" in error &&
       typeof (error as { status: unknown }).status === "number"
     ) {
-      const data = "data" in error
-        ? (error as { data?: BarkResponse }).data
-        : undefined;
-      const status = (error as { status: number }).status;
+      const data =
+        "data" in error ? (error as { data?: BarkResponse }).data : undefined
+      const status = (error as { status: number }).status
 
       const failedToGetDeviceTokenRegularExpression =
-        /failed to get device token: (.*)/;
-      const requestBindFailedRegularExpression = /request bind failed: (.*)/;
-      const pushFailedRegularExpression = /push failed: (.*)/;
+        /failed to get device token: (.*)/
+      const requestBindFailedRegularExpression = /request bind failed: (.*)/
+      const pushFailedRegularExpression = /push failed: (.*)/
 
       if (status === 400 && data?.message === "device key is empty") {
         return new BarkResponseError(
           BarkResponseErrorType.DEVICE_KEY_IS_EMPTY,
           "Device key is empty",
           error,
-        );
+        )
       } else if (
         status === 400 &&
         data?.message !== undefined &&
         failedToGetDeviceTokenRegularExpression.test(data.message)
       ) {
         const regularExpressionExecArray =
-          failedToGetDeviceTokenRegularExpression.exec(data.message);
+          failedToGetDeviceTokenRegularExpression.exec(data.message)
         return new BarkResponseError(
           BarkResponseErrorType.FAILED_TO_GET_DEVICE_TOKEN,
           regularExpressionExecArray != null
             ? `Failed to get device token: ${regularExpressionExecArray[1]}`
             : "Failed to get device token",
           error,
-        );
+        )
       } else if (
         status === 400 &&
         data?.message !== undefined &&
         requestBindFailedRegularExpression.test(data.message)
       ) {
-        const regularExpressionExecArray = requestBindFailedRegularExpression
-          .exec(data.message);
+        const regularExpressionExecArray =
+          requestBindFailedRegularExpression.exec(data.message)
         return new BarkResponseError(
           BarkResponseErrorType.REQUEST_BIND_FAILED,
           regularExpressionExecArray != null
             ? `Request bind failed: ${regularExpressionExecArray[1]}`
             : "Request bind failed",
           error,
-        );
+        )
       } else if (
         status === 500 &&
         data?.message !== undefined &&
@@ -360,32 +360,32 @@ export default class BarkClient {
       ) {
         const regularExpressionExecArray = pushFailedRegularExpression.exec(
           data.message,
-        );
+        )
         return new BarkResponseError(
           BarkResponseErrorType.PUSH_FAILED,
           regularExpressionExecArray != null
             ? `Push failed: ${regularExpressionExecArray[1]}`
             : "Push failed",
           error,
-        );
+        )
       }
 
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
         error,
-      );
+      )
     } else if (error instanceof Error) {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
         error,
-      );
+      )
     } else {
       return new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Unknown error",
-      );
+      )
     }
   }
 
@@ -401,27 +401,27 @@ export default class BarkClient {
     pathname: string,
     init?: RequestInit,
   ): Promise<Response> {
-    const effectiveFetch = globalThis.fetch;
+    const effectiveFetch = globalThis.fetch
     if (effectiveFetch == null) {
       throw new BarkResponseError(
         BarkResponseErrorType.UNKNOWN_ERROR,
         "Fetch API is unavailable in current runtime",
-      );
+      )
     }
 
-    const response = await effectiveFetch(this.buildUrl(pathname), init);
+    const response = await effectiveFetch(this.buildUrl(pathname), init)
 
     if (!response.ok) {
       const error = new Error(`HTTP ${response.status}`) as Error & {
-        status: number;
-        data?: BarkResponse;
-      };
-      error.status = response.status;
-      error.data = await this.tryParseBarkResponse(response.clone());
-      throw error;
+        status: number
+        data?: BarkResponse
+      }
+      error.status = response.status
+      error.data = await this.tryParseBarkResponse(response.clone())
+      throw error
     }
 
-    return response;
+    return response
   }
 
   /**
@@ -437,8 +437,8 @@ export default class BarkClient {
     pathname: string,
     init?: RequestInit,
   ): Promise<T> {
-    const response = await this.request(pathname, init);
-    return (await response.json()) as T;
+    const response = await this.request(pathname, init)
+    return (await response.json()) as T
   }
 
   /**
@@ -457,8 +457,7 @@ export default class BarkClient {
       this.serverAddress.endsWith("/")
         ? this.serverAddress
         : `${this.serverAddress}/`,
-    )
-      .toString();
+    ).toString()
   }
 
   /**
@@ -476,9 +475,9 @@ export default class BarkClient {
     response: Response,
   ): Promise<BarkResponse | undefined> {
     try {
-      return (await response.json()) as BarkResponse;
+      return (await response.json()) as BarkResponse
     } catch {
-      return undefined;
+      return undefined
     }
   }
 
@@ -507,24 +506,23 @@ export default class BarkClient {
     iv: string,
     cryptoImpl: Crypto,
   ): Promise<string> {
-    const { keySize, mode } = this.cryptoJsModeAndKeySizeProducer(algorithm);
-    const textEncoder = new TextEncoder();
-    const keyBytes = textEncoder.encode(key);
-    const ivBytes = textEncoder.encode(iv);
-    const plaintext = textEncoder.encode(JSON.stringify(message));
-    const padded = this.padToAesBlockSize(plaintext);
+    const { keySize, mode } = this.cryptoJsModeAndKeySizeProducer(algorithm)
+    const textEncoder = new TextEncoder()
+    const keyBytes = textEncoder.encode(key)
+    const ivBytes = textEncoder.encode(iv)
+    const plaintext = textEncoder.encode(JSON.stringify(message))
+    const padded = this.padToAesBlockSize(plaintext)
 
     if (keyBytes.length !== keySize / 8) {
-      throw new EncryptionKeySizeError(
-        "The algorithm has not a valid key size",
-      );
+      throw new EncryptionKeySizeError("The algorithm has not a valid key size")
     }
 
-    const encrypted = mode === "cbc"
-      ? await this.encryptCbc(padded, keyBytes, ivBytes, cryptoImpl)
-      : await this.encryptEcb(padded, keyBytes, cryptoImpl);
+    const encrypted =
+      mode === "cbc"
+        ? await this.encryptCbc(padded, keyBytes, ivBytes, cryptoImpl)
+        : await this.encryptEcb(padded, keyBytes, cryptoImpl)
 
-    return this.base64Encode(encrypted);
+    return this.base64Encode(encrypted)
   }
 
   /**
@@ -535,13 +533,13 @@ export default class BarkClient {
    * @returns Padded bytes with PKCS#7 padding.
    */
   protected padToAesBlockSize(data: Uint8Array): Uint8Array {
-    const blockSize = 16;
-    const remainder = data.length % blockSize;
-    const paddingLength = remainder === 0 ? blockSize : blockSize - remainder;
-    const result = new Uint8Array(data.length + paddingLength);
-    result.set(data);
-    result.fill(paddingLength, data.length);
-    return result;
+    const blockSize = 16
+    const remainder = data.length % blockSize
+    const paddingLength = remainder === 0 ? blockSize : blockSize - remainder
+    const result = new Uint8Array(data.length + paddingLength)
+    result.set(data)
+    result.fill(paddingLength, data.length)
+    return result
   }
 
   /**
@@ -558,22 +556,22 @@ export default class BarkClient {
     ivBytes: Uint8Array,
     cryptoImpl: Crypto,
   ): Promise<Uint8Array> {
-    const keyMaterial = this.toArrayBuffer(keyBytes);
-    const iv = this.toArrayBuffer(ivBytes);
-    const payload = this.toArrayBuffer(data);
+    const keyMaterial = this.toArrayBuffer(keyBytes)
+    const iv = this.toArrayBuffer(ivBytes)
+    const payload = this.toArrayBuffer(data)
     const key = await cryptoImpl.subtle.importKey(
       "raw",
       keyMaterial,
       { name: "AES-CBC" },
       false,
       ["encrypt"],
-    );
+    )
     const encrypted = await cryptoImpl.subtle.encrypt(
       { name: "AES-CBC", iv },
       key,
       payload,
-    );
-    return new Uint8Array(encrypted);
+    )
+    return new Uint8Array(encrypted)
   }
 
   /**
@@ -591,28 +589,28 @@ export default class BarkClient {
     keyBytes: Uint8Array,
     cryptoImpl: Crypto,
   ): Promise<Uint8Array> {
-    const keyMaterial = this.toArrayBuffer(keyBytes);
+    const keyMaterial = this.toArrayBuffer(keyBytes)
     const key = await cryptoImpl.subtle.importKey(
       "raw",
       keyMaterial,
       { name: "AES-CBC" },
       false,
       ["encrypt"],
-    );
-    const zeroIv = this.toArrayBuffer(new Uint8Array(16));
-    const encrypted = new Uint8Array(data.length);
+    )
+    const zeroIv = this.toArrayBuffer(new Uint8Array(16))
+    const encrypted = new Uint8Array(data.length)
 
     for (let offset = 0; offset < data.length; offset += 16) {
-      const block = data.slice(offset, offset + 16);
+      const block = data.slice(offset, offset + 16)
       const encryptedBlock = await cryptoImpl.subtle.encrypt(
         { name: "AES-CBC", iv: zeroIv },
         key,
         this.toArrayBuffer(block),
-      );
-      encrypted.set(new Uint8Array(encryptedBlock).slice(0, 16), offset);
+      )
+      encrypted.set(new Uint8Array(encryptedBlock).slice(0, 16), offset)
     }
 
-    return encrypted;
+    return encrypted
   }
 
   /**
@@ -622,9 +620,9 @@ export default class BarkClient {
    * @returns A copied ArrayBuffer containing the same bytes.
    */
   protected toArrayBuffer(data: Uint8Array): ArrayBuffer {
-    const copy = new Uint8Array(new ArrayBuffer(data.byteLength));
-    copy.set(data);
-    return copy.buffer;
+    const copy = new Uint8Array(new ArrayBuffer(data.byteLength))
+    copy.set(data)
+    return copy.buffer
   }
 
   /**
@@ -634,10 +632,10 @@ export default class BarkClient {
    * @returns Base64-encoded string.
    */
   protected base64Encode(data: Uint8Array): string {
-    let binary = "";
+    let binary = ""
     for (const byte of data) {
-      binary += String.fromCharCode(byte);
+      binary += String.fromCharCode(byte)
     }
-    return btoa(binary);
+    return btoa(binary)
   }
 }

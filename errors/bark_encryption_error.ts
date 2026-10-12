@@ -1,4 +1,4 @@
-import type BarkEncryptionErrorType from "../enums/bark_encryption_error_type.ts";
+import type BarkEncryptionErrorType from "../enums/bark_encryption_error_type.ts"
 
 /**
  * Bark encryption error
@@ -10,17 +10,17 @@ export default class BarkEncryptionError extends Error {
   /**
    * Domain-level encryption error classification.
    */
-  type: BarkEncryptionErrorType;
+  type: BarkEncryptionErrorType
 
   /**
    * Human-readable error message.
    */
-  override message: string;
+  override message: string
 
   /**
    * Optional underlying cause.
    */
-  override cause?: Error;
+  override cause?: Error
 
   /**
    * Create a Bark encryption error.
@@ -30,9 +30,9 @@ export default class BarkEncryptionError extends Error {
    * @param cause Optional underlying cause.
    */
   constructor(type: BarkEncryptionErrorType, message: string, cause?: Error) {
-    super(message);
-    this.type = type;
-    this.message = message;
-    this.cause = cause;
+    super(message)
+    this.type = type
+    this.message = message
+    this.cause = cause
   }
 }
