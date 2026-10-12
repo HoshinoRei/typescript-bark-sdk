@@ -6,7 +6,6 @@ on:
     paths:
       - .github/workflows/test.yml
       - bun.lock
-      - bunfig.toml
       - package.json
       - tsconfig.json
       - .prettierrc.yml
@@ -19,13 +18,11 @@ on:
       - errors/**
       - types/**
       - internal/**
-      - scripts/**
       - tests/**
   pull_request:
     paths:
       - .github/workflows/test.yml
       - bun.lock
-      - bunfig.toml
       - package.json
       - tsconfig.json
       - .prettierrc.yml
@@ -37,12 +34,12 @@ on:
       - errors/**
       - types/**
       - internal/**
-      - scripts/**
       - tests/**
 jobs:
   bun-test:
     name: Bun Test
     permissions:
+      contents: read
       checks: write
       pull-requests: write
     runs-on: ubuntu-latest
@@ -75,6 +72,9 @@ jobs:
           path: test-result/bun-coverage/lcov.info
       - name: Report Bun coverage
         if: (success() || failure()) && github.event_name == 'pull_request'
-        run: bun run scripts/report_bun_coverage.ts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: step-security/lcov-reporter-action@v0
+        with:
+          lcov-file: test-result/bun-coverage/lcov.info
+          filter-changed-files: true
+          delete-old-comments: true
+          title: Bun Coverage

@@ -1,2 +1,0 @@
-[test]
-coveragePathIgnorePatterns = ["scripts/report_bun_coverage.ts"]

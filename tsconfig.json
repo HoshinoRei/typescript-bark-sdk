@@ -18,7 +18,6 @@
     "errors/**/*.ts",
     "internal/**/*.ts",
     "types/**/*.ts",
-    "scripts/**/*.ts",
     "tests/**/*.ts"
   ]
 }
