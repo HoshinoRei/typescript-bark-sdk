@@ -1,4 +1,4 @@
-import type BarkResponseErrorType from "../enums/bark_response_error_type.ts";
+import type BarkResponseErrorType from "../enums/bark_response_error_type.ts"
 
 /**
  * Bark response error
@@ -10,17 +10,17 @@ export default class BarkResponseError extends Error {
   /**
    * Domain-level response error classification.
    */
-  type: BarkResponseErrorType;
+  type: BarkResponseErrorType
 
   /**
    * Human-readable error message.
    */
-  override message: string;
+  override message: string
 
   /**
    * Optional underlying cause.
    */
-  override cause?: Error;
+  override cause?: Error
 
   /**
    * Create a Bark response error.
@@ -30,9 +30,9 @@ export default class BarkResponseError extends Error {
    * @param cause Optional underlying cause.
    */
   constructor(type: BarkResponseErrorType, message: string, cause?: Error) {
-    super(message);
-    this.type = type;
-    this.message = message;
-    this.cause = cause;
+    super(message)
+    this.type = type
+    this.message = message
+    this.cause = cause
   }
 }

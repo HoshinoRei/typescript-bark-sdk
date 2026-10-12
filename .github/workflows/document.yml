@@ -3,6 +3,12 @@ on:
   pull_request:
     paths:
       - .github/workflows/document.yml
+      - bun.lock
+      - package.json
+      - tsconfig.json
+      - .prettierrc.yml
+      - .prettierignore
+      - eslint.config.mjs
       - mod.ts
       - bark_client.ts
       - bark_message_builder.ts
@@ -10,13 +16,17 @@ on:
       - errors/**
       - types/**
       - internal/**
-      - tests/**
-      - deno.json
   push:
     branches:
       - master
     paths:
       - .github/workflows/document.yml
+      - bun.lock
+      - package.json
+      - tsconfig.json
+      - .prettierrc.yml
+      - .prettierignore
+      - eslint.config.mjs
       - mod.ts
       - bark_client.ts
       - bark_message_builder.ts
@@ -24,18 +34,20 @@ on:
       - errors/**
       - types/**
       - internal/**
-      - tests/**
-      - deno.json
 permissions:
   contents: read
 jobs:
   document:
-    name: Validate API documentation
+    name: Validate public API
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-      - name: Lint docs
-        run: deno doc --lint mod.ts
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Check public API
+        run: bun run check

@@ -1,59 +1,59 @@
-import { test } from "@cross/test";
-import { assertEquals, assertThrows } from "@std/assert";
+import { test } from "bun:test"
 
-import BarkMessageBuilder from "../bark_message_builder.ts";
-import BarkMessageLevel from "../enums/bark_message_level.ts";
-import BarkMessageErrorType from "../enums/bark_message_error_type.ts";
-import BarkMessageSound from "../enums/bark_message_sound.ts";
-import BarkMessageError from "../errors/bark_message_error.ts";
+import BarkMessageBuilder from "../bark_message_builder.ts"
+import BarkMessageErrorType from "../enums/bark_message_error_type.ts"
+import BarkMessageLevel from "../enums/bark_message_level.ts"
+import BarkMessageSound from "../enums/bark_message_sound.ts"
+import BarkMessageError from "../errors/bark_message_error.ts"
+import { assertEquals, assertThrows } from "./assertions.ts"
 
 test("Build message: icon property is a URL", () => {
-  new BarkMessageBuilder().icon("https://i.am/a.url");
-});
+  new BarkMessageBuilder().icon("https://i.am/a.url")
+})
 
 test("Build message: icon property is not a URL", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().icon("I am not a URL"),
     BarkMessageError,
-  );
+  )
 
-  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL);
-  assertEquals(error.message, "The argument icon is not a URL");
-});
+  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL)
+  assertEquals(error.message, "The argument icon is not a URL")
+})
 
 test("Build message: url property is a URL", () => {
-  new BarkMessageBuilder().url("https://i.am/a.url");
-});
+  new BarkMessageBuilder().url("https://i.am/a.url")
+})
 
 test("Build message: url property is not a URL", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().url("I am not a URL"),
     BarkMessageError,
-  );
+  )
 
-  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL);
-  assertEquals(error.message, "The argument url is not a URL");
-});
+  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL)
+  assertEquals(error.message, "The argument url is not a URL")
+})
 
 test("Build message: icon property uses unsupported protocol", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().icon("ftp://i.am/a.url"),
     BarkMessageError,
-  );
+  )
 
-  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL);
-  assertEquals(error.message, "The argument icon is not a URL");
-});
+  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL)
+  assertEquals(error.message, "The argument icon is not a URL")
+})
 
 test("Build message: url property uses unsupported protocol", () => {
   const error = assertThrows(
     () => new BarkMessageBuilder().url("mailto:test@example.com"),
     BarkMessageError,
-  );
+  )
 
-  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL);
-  assertEquals(error.message, "The argument url is not a URL");
-});
+  assertEquals(error.type, BarkMessageErrorType.IS_NOT_URL)
+  assertEquals(error.message, "The argument url is not a URL")
+})
 
 test("Build message: fluent builder sets all fields", () => {
   const message = new BarkMessageBuilder()
@@ -69,7 +69,7 @@ test("Build message: fluent builder sets all fields", () => {
     .sound(BarkMessageSound.ALARM)
     .title("Test title")
     .url("https://example.com")
-    .build();
+    .build()
 
   assertEquals(message, {
     badge: 1,
@@ -84,14 +84,14 @@ test("Build message: fluent builder sets all fields", () => {
     sound: BarkMessageSound.ALARM,
     title: "Test title",
     url: "https://example.com",
-  });
-});
+  })
+})
 
 test("Build message: built object reflects later mutations", () => {
-  const builder = new BarkMessageBuilder().body("A");
-  const built = builder.build();
+  const builder = new BarkMessageBuilder().body("A")
+  const built = builder.build()
 
-  builder.title("B");
+  builder.title("B")
 
-  assertEquals(built.title, "B");
-});
+  assertEquals(built.title, "B")
+})

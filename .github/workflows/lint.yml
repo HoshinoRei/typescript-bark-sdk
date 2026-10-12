@@ -8,14 +8,18 @@ permissions:
   contents: read
 jobs:
   check:
-    name: Check lint
+    name: Check format and lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
       - name: Check format
-        run: deno task fmt:check
+        run: bun run fmt:check
       - name: Check lint
-        run: deno task lint
+        run: bun run lint:check

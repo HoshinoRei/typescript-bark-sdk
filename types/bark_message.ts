@@ -1,5 +1,5 @@
-import type BarkMessageLevel from "../enums/bark_message_level.ts";
-import type BarkMessageSound from "../enums/bark_message_sound.ts";
+import type BarkMessageLevel from "../enums/bark_message_level.ts"
+import type BarkMessageSound from "../enums/bark_message_sound.ts"
 
 /**
  * Bark message
@@ -20,60 +20,60 @@ export default interface BarkMessage {
   /**
    * Badge number shown on app icon.
    */
-  badge?: number;
+  badge?: number
 
   /**
    * Notification body text.
    */
-  body?: string;
+  body?: string
 
   /**
    * Notification category value.
    */
-  category?: string;
+  category?: string
 
   /**
    * Content copied to clipboard.
    */
-  copy?: string;
+  copy?: string
 
   /**
    * Target Bark device key.
    */
-  device_key?: string;
+  device_key?: string
 
   /**
    * Notification group name.
    */
-  group?: string;
+  group?: string
 
   /**
    * Icon URL.
    */
-  icon?: string;
+  icon?: string
 
   /**
    * Archive flag (`"1"` to archive).
    */
-  isArchive?: string;
+  isArchive?: string
 
   /**
    * Notification interruption level.
    */
-  level?: BarkMessageLevel;
+  level?: BarkMessageLevel
 
   /**
    * Notification sound.
    */
-  sound?: BarkMessageSound;
+  sound?: BarkMessageSound
 
   /**
    * Notification title text.
    */
-  title?: string;
+  title?: string
 
   /**
    * URL opened when notification is tapped.
    */
-  url?: string;
+  url?: string
 }

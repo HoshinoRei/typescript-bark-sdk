@@ -7,12 +7,12 @@ export default class EncryptionModeError extends Error {
   /**
    * Human-readable error message.
    */
-  override message: string;
+  override message: string
 
   /**
    * Optional underlying cause.
    */
-  override cause?: Error;
+  override cause?: Error
 
   /**
    * Create an encryption mode error.
@@ -21,8 +21,8 @@ export default class EncryptionModeError extends Error {
    * @param cause Optional underlying cause.
    */
   constructor(message: string, cause?: Error) {
-    super(message);
-    this.message = message;
-    this.cause = cause;
+    super(message)
+    this.message = message
+    this.cause = cause
   }
 }

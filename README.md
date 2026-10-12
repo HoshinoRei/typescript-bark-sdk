@@ -1,21 +1,27 @@
 # TypeScript Bark SDK
 
-A TypeScript SDK for [Bark](https://github.com/Finb/Bark) API v2, published on
-JSR.
+A Bun-first TypeScript SDK for the [Bark](https://github.com/Finb/Bark) API v2,
+published to npm.
 
 ## Overview
 
+- Bun-native test and development workflow
 - Bark API v2 support (`push`, `pushEncrypted`, `health`, `ping`, `info`)
 - Typed request/response models
 - Typed error model for message/encryption/response failures
-- Works in Deno, Node.js (latest LTS), and Bun
+
+## Installation
+
+```shell
+bun add @hoshinorei/bark-sdk
+```
 
 ## Getting Started
 
 ```ts
-import { BarkClient, BarkMessageBuilder } from "jsr:@hoshinorei/bark-sdk";
+import { BarkClient, BarkMessageBuilder } from "@hoshinorei/bark-sdk"
 
-const client = new BarkClient("https://api.day.app");
+const client = new BarkClient("https://api.day.app")
 
 await client.push(
   new BarkMessageBuilder()
@@ -23,7 +29,7 @@ await client.push(
     .deviceKey("<your_device_key>")
     .title("Bark")
     .build(),
-);
+)
 ```
 
 ## Encrypted Push
@@ -33,9 +39,9 @@ import {
   BarkClient,
   BarkEncryptedPushAlgorithm,
   BarkMessageBuilder,
-} from "jsr:@hoshinorei/bark-sdk";
+} from "@hoshinorei/bark-sdk"
 
-const client = new BarkClient("https://api.day.app");
+const client = new BarkClient("https://api.day.app")
 
 await client.pushEncrypted(
   "<your_device_key>",
@@ -43,12 +49,12 @@ await client.pushEncrypted(
   BarkEncryptedPushAlgorithm.AES_128_CBC,
   "<your_key>",
   "<your_iv>",
-);
+)
 ```
 
 > `key`/`iv` must match the selected algorithm requirements.
 
-- [Supported algorithms](https://jsr.io/@hoshinorei/bark-sdk/doc/~/BarkEncryptedPushAlgorithm#members)
+- [Supported algorithms](./enums/bark_encrypted_push_algorithm.ts)
 
 ## Public API
 
@@ -80,20 +86,19 @@ await client.pushEncrypted(
 
 ## Development
 
-- Format: `deno task fmt`
-- Format check: `deno task fmt:check`
-- Lint: `deno task lint`
-- Type check: `deno task check`
-- Unit tests (Deno, coverage + JUnit): `deno task test`
-- Unit tests (Node latest LTS): `npm run test:node`
-- Unit tests (Bun): `bun run test:bun`
-- Prepublish gate: `deno task prepublish`
+- Install dependencies: `bun install`
+- Format all files: `bun run fmt`
+- Format check only: `bun run fmt:check`
+- Fix lint issues: `bun run lint`
+- Lint check only: `bun run lint:check`
+- Type check public entry and tests: `bun run check`
+- Unit tests with coverage and JUnit output: `bun run test`
+- Run all validation gates: `bun run validate`
+- Preview the npm package: `bun run pack`
 
-The test suite is written with `@cross/test` and is expected to pass in Deno,
-Node latest LTS, and Bun.
-
-`deno task prepublish` runs formatting/lint/type-check/tests and
-`deno publish --dry-run`.
+The project uses Prettier for formatting and ESLint for static analysis. The
+test suite uses Bun's built-in `bun:test` runner and is supported on Bun 1.4 or
+newer. The release workflow publishes the package to npm.
 
 ## License
 

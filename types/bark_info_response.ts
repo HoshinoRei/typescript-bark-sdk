@@ -10,25 +10,25 @@ export default interface BarkInfoResponse {
   /**
    * Bark server architecture string.
    */
-  arch?: string;
+  arch?: string
 
   /**
    * Bark server build time.
    */
-  build?: Date;
+  build?: Date
 
   /**
    * Commit hash used to build Bark server.
    */
-  commit?: string;
+  commit?: string
 
   /**
    * Number of devices registered on Bark server.
    */
-  devices?: number;
+  devices?: number
 
   /**
    * Bark server version string.
    */
-  version?: string;
+  version?: string
 }

@@ -10,4 +10,4 @@ enum BarkEncryptedPushAlgorithm {
   AES_256_ECB = "aes-256-ecb",
 }
 
-export default BarkEncryptedPushAlgorithm;
+export default BarkEncryptedPushAlgorithm

@@ -1,8 +1,8 @@
-import BarkMessageErrorType from "./enums/bark_message_error_type.ts";
-import type BarkMessageLevel from "./enums/bark_message_level.ts";
-import type BarkMessageSound from "./enums/bark_message_sound.ts";
-import BarkMessageError from "./errors/bark_message_error.ts";
-import type BarkMessage from "./types/bark_message.ts";
+import BarkMessageErrorType from "./enums/bark_message_error_type.ts"
+import type BarkMessageLevel from "./enums/bark_message_level.ts"
+import type BarkMessageSound from "./enums/bark_message_sound.ts"
+import BarkMessageError from "./errors/bark_message_error.ts"
+import type BarkMessage from "./types/bark_message.ts"
 
 /**
  * A class to help build Bark message properly
@@ -12,13 +12,13 @@ export default class BarkMessageBuilder {
   /**
    * Mutable Bark message object under construction.
    */
-  protected barkMessage: BarkMessage;
+  protected barkMessage: BarkMessage
 
   /**
    * Create an empty Bark message builder.
    */
   constructor() {
-    this.barkMessage = {};
+    this.barkMessage = {}
   }
 
   /**
@@ -26,8 +26,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   archive(): BarkMessageBuilder {
-    this.barkMessage.isArchive = "1";
-    return this;
+    this.barkMessage.isArchive = "1"
+    return this
   }
 
   /**
@@ -36,8 +36,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   badge(badge: number): BarkMessageBuilder {
-    this.barkMessage.badge = badge;
-    return this;
+    this.barkMessage.badge = badge
+    return this
   }
 
   /**
@@ -45,7 +45,7 @@ export default class BarkMessageBuilder {
    * @returns Bark message
    */
   build(): BarkMessage {
-    return this.barkMessage;
+    return this.barkMessage
   }
 
   /**
@@ -54,8 +54,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   body(body: string): BarkMessageBuilder {
-    this.barkMessage.body = body;
-    return this;
+    this.barkMessage.body = body
+    return this
   }
 
   /**
@@ -64,8 +64,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   category(category: string): BarkMessageBuilder {
-    this.barkMessage.category = category;
-    return this;
+    this.barkMessage.category = category
+    return this
   }
 
   /**
@@ -74,8 +74,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   copy(copy: string): BarkMessageBuilder {
-    this.barkMessage.copy = copy;
-    return this;
+    this.barkMessage.copy = copy
+    return this
   }
 
   /**
@@ -84,8 +84,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   deviceKey(deviceKey: string): BarkMessageBuilder {
-    this.barkMessage.device_key = deviceKey;
-    return this;
+    this.barkMessage.device_key = deviceKey
+    return this
   }
 
   /**
@@ -94,8 +94,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   group(group: string): BarkMessageBuilder {
-    this.barkMessage.group = group;
-    return this;
+    this.barkMessage.group = group
+    return this
   }
 
   /**
@@ -106,10 +106,10 @@ export default class BarkMessageBuilder {
    */
   icon(icon: string): BarkMessageBuilder {
     if (this.isHttpUrl(icon)) {
-      this.barkMessage.icon = icon;
-      return this;
+      this.barkMessage.icon = icon
+      return this
     } else {
-      throw this.isNotUrlErrorProducer("icon");
+      throw this.isNotUrlErrorProducer("icon")
     }
   }
 
@@ -119,8 +119,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   level(level: BarkMessageLevel): BarkMessageBuilder {
-    this.barkMessage.level = level;
-    return this;
+    this.barkMessage.level = level
+    return this
   }
 
   /**
@@ -129,8 +129,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   sound(sound: BarkMessageSound): BarkMessageBuilder {
-    this.barkMessage.sound = sound;
-    return this;
+    this.barkMessage.sound = sound
+    return this
   }
 
   /**
@@ -139,8 +139,8 @@ export default class BarkMessageBuilder {
    * @returns The builder
    */
   title(title: string): BarkMessageBuilder {
-    this.barkMessage.title = title;
-    return this;
+    this.barkMessage.title = title
+    return this
   }
 
   /**
@@ -151,10 +151,10 @@ export default class BarkMessageBuilder {
    */
   url(url: string): BarkMessageBuilder {
     if (this.isHttpUrl(url)) {
-      this.barkMessage.url = url;
-      return this;
+      this.barkMessage.url = url
+      return this
     } else {
-      throw this.isNotUrlErrorProducer("url");
+      throw this.isNotUrlErrorProducer("url")
     }
   }
 
@@ -167,7 +167,7 @@ export default class BarkMessageBuilder {
     return new BarkMessageError(
       BarkMessageErrorType.IS_NOT_URL,
       `The argument ${argumentName} is not a URL`,
-    );
+    )
   }
 
   /**
@@ -178,10 +178,10 @@ export default class BarkMessageBuilder {
    */
   protected isHttpUrl(url: string): boolean {
     try {
-      const parsed = new URL(url);
-      return parsed.protocol === "http:" || parsed.protocol === "https:";
+      const parsed = new URL(url)
+      return parsed.protocol === "http:" || parsed.protocol === "https:"
     } catch {
-      return false;
+      return false
     }
   }
 }

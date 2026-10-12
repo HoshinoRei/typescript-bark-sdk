@@ -7,12 +7,12 @@ export default class EncryptionKeySizeError extends Error {
   /**
    * Human-readable error message.
    */
-  override message: string;
+  override message: string
 
   /**
    * Optional underlying cause.
    */
-  override cause?: Error;
+  override cause?: Error
 
   /**
    * Create an encryption key size error.
@@ -21,8 +21,8 @@ export default class EncryptionKeySizeError extends Error {
    * @param cause Optional underlying cause.
    */
   constructor(message: string, cause?: Error) {
-    super(message);
-    this.message = message;
-    this.cause = cause;
+    super(message)
+    this.message = message
+    this.cause = cause
   }
 }

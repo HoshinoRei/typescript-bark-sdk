@@ -5,4 +5,4 @@ enum BarkMessageErrorType {
   IS_NOT_URL,
 }
 
-export default BarkMessageErrorType;
+export default BarkMessageErrorType

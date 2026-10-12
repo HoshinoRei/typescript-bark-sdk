@@ -10,4 +10,4 @@ enum BarkResponseErrorType {
   UNKNOWN_ERROR,
 }
 
-export default BarkResponseErrorType;
+export default BarkResponseErrorType

@@ -1,0 +1,9 @@
+# Ignore generated artifacts:
+coverage
+dist
+docs
+bun.lock
+node_modules
+test-result
+wiki
+.claude/worktrees

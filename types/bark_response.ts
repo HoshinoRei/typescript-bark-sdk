@@ -8,15 +8,15 @@ export default interface BarkResponse {
   /**
    * Response status code from Bark API.
    */
-  code?: number;
+  code?: number
 
   /**
    * Response message from Bark API.
    */
-  message?: string;
+  message?: string
 
   /**
    * Response timestamp from Bark API.
    */
-  timestamp?: number;
+  timestamp?: number
 }
